@@ -162,7 +162,6 @@ form button {
     height: 100%;
     z-index: -1;
     animation: backgroundTransition 20s infinite;
-    animation-delay: 1s;
 }
 @keyframes backgroundTransition {
     0% {
