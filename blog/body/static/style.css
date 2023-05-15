@@ -1,17 +1,19 @@
-*{
+* {
     margin: 0;
     padding: 0;
     font-family: 'Calibri', sans-serif;
     box-sizing: border-box;
 }
-.container{
+
+.container {
     width: 100%;
     height: 100vh;
     background: gray;
     position: fixed;
 }
-form{
-    background: #fff;
+
+form {
+    background: white;
     width: 300px;
     height: 45px;
     display: flex;
@@ -20,27 +22,163 @@ form{
     top: 20px;
     right: 200px;
 }
-form input{
+
+form input {
     flex: 1;
     border: none;
     outline: none;
     border-radius: 15px;
     padding: 10px;
-    height: 40px;
     text-align: center;
 }
-form button{
+
+form button {
     background: red;
     padding: 10px 10px;
     border: none;
     border-radius: 15px;
     outline: none;
-    color: #fff;
+    color: white;
     letter-spacing: 1px;
     cursor: pointer;
 }
-form .fa-magnifying-glass{
+
+.user-button {
+    position: fixed;
+    top: 20px;
+    right: 140px;
+}
+
+.favourite-button {
+    position: fixed;
+    top: 20px;
+    right: 80px;
+}
+.admin-button{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+.user-button button,
+.favourite-button button,
+.admin-button button,
+.button-container button {
+    background: red;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.fa-magnifying-glass,
+.fa-user,
+.fa-heart,
+.fa-lock,
+.fa-user-plus,
+.fa-house,
+.fa-arrow-right {
     align-self: center;
     padding: 7px;
     color: red;
+}
+
+.login-form {
+    background: white;
+    width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+}
+
+.login-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.login-form button {
+    background: red;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin: 0;
+}
+
+.login-form button:hover {
+    background-color: #a20000;
+}
+
+.background-image {
+    background-image: url('login-background.jpg');
+    background-size: cover;
+    background-position: center center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.home-button, .signup-button, .login-button {
+    background: gray;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+.home-button:hover, .signup-button:hover, .login-button:hover {
+    background-color: #4d4d4d;
+}
+
+.login-form button:not(:first-of-type){
+    margin-left: 10px;
 }

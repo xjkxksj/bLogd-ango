@@ -1,12 +1,29 @@
 {% extends 'body/welcome.html' %}
 
 {% block content %}
-    <div class="container">
-        <form>
-            <input type="text" placeholder="Search what you need">
-            <button type="submit">
-                <i class="fa-solid fa-magnifying-glass" style="color: white;"></i>
-            </button>
-        </form>
+  <div class="container">
+      <form>
+          <input type="text" placeholder="Search what you need">
+          <button type="submit">
+              <i class="fa-solid fa-magnifying-glass" style="color: white;"></i>
+          </button>
+      </form>
+  </div>
+  <div class="user-fav-container button-container">
+      <div class="user-button">
+          <button onclick="location.href='login/'">
+              <i class="fas fa-user" style="color: white;"></i>
+          </button>
+      </div>
+      <div class="favourite-button">
+          <button onclick="location.href='favourites/'">
+              <i class="fas fa-heart" style="color: white;"></i>
+          </button>
+      </div>
+      <div class="admin-button">
+        <button onclick="location.href='admin/'">
+            <i class="fa-solid fa-lock" style="color: white;"></i>
+        </button>
     </div>
+  </div>
 {% endblock %}
