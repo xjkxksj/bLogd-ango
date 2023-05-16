@@ -92,13 +92,31 @@ form button {
 .fa-lock,
 .fa-user-plus,
 .fa-house,
-.fa-arrow-right {
+.fa-arrow-right,
+.fa-arrow-left,
+.fa-plus {
     align-self: center;
     padding: 7px;
     color: red;
 }
 
 .login-form {
+    background: white;
+    width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+}
+
+.register-form{
     background: white;
     width: 300px;
     height: auto;
@@ -149,9 +167,46 @@ form button {
 }
 
 .login-form button:hover {
-    background-color: #a20000;
+    background-color: red;
 }
 
+.register-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.register-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.register-form input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.register-form button {
+    background: red;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin: 0;
+}
+
+.register-form button:hover {
+    background-color: red;
+}
 .background-image {
     background-size: cover;
     background-position: center center;
@@ -167,19 +222,26 @@ form button {
     0% {
         background-image: url('login-background1.jpg');
     }
-    25% {
+    10% {
+        background-image: url('login-background1.jpg');
+    }
+    30% {
         background-image: url('login-background2.jpg');
     }
     50% {
         background-image: url('login-background3.jpg');
     }
-    75% {
+    70% {
         background-image: url('login-background4.jpg');
     }
-    100% {
+    90% {
         background-image: url('login-background5.jpg');
     }
+    100% {
+        background-image: url('login-background1.jpg');
+    }
 }
+
 .home-button, .signup-button, .login-button {
     background: gray;
     padding: 10px 10px;
@@ -193,9 +255,88 @@ form button {
     transition: background-color 0.3s ease;
 }
 .home-button:hover, .signup-button:hover, .login-button:hover {
-    background-color: #4d4d4d;
+    background-color: gray;
 }
 
 .login-form button:not(:first-of-type){
+    margin-left: 10px;
+}
+
+.register-form button:not(:first-of-type){
+    margin-left: 10px;
+}
+.form input:not(:last-of-type) {
+    margin-bottom: 10px;
+}
+
+form.register-form {
+    background: white;
+    width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+}
+
+form.search-form {
+    background: white;
+    width: 300px;
+    height: 45px;
+    display: flex;
+    border-radius: 15px;
+    position: fixed;
+    top: 20px;
+    right: 200px;
+}
+
+.register-form input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    outline: none;
+}
+
+.register-form input:focus {
+    border-color: red;
+}
+
+.register-form input:valid {
+    border-color: green;
+}
+
+.register-form input:invalid {
+    border-color: red;
+}
+
+.captcha-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.captcha-input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+.captcha-image {
+    width: 150px;
+    height: 45px;
+    border-radius: 5px;
     margin-left: 10px;
 }

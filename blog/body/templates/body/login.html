@@ -1,5 +1,5 @@
 {% extends 'body/welcome.html' %}
-
+{% load static %}
 {% block content %}
 <div class="background-image"></div>
 <div class="login-page">
@@ -9,8 +9,9 @@
         <input type="text" id="username" name="username" required>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
+        
         <div class="button-container">
-            <button onclick="location.href='register/'"; type="submit" class="signup-button">
+            <button onclick="location.href='/register/'"; type="submit" class="signup-button">
                 <i class="fa-solid fa-user-plus" style="color: white;"></i>
             </button>
             <button onclick="location.href='/'"; type="button" class="home-button">

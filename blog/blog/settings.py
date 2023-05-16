@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from django.conf import settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,13 +26,14 @@ SECRET_KEY = "django-insecure-t(f@-h0^!$w^p9%d6c43y-%2f%lq9gzhrqq=#t388_u0bx-)n_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     "body.apps.BodyConfig",
+    "captcha",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -122,3 +124,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+RECAPTCHA_PRIVATE_KEY = "6LcP3xEmAAAAAAmb3iNOuL5IdR5WJLkEkOu0hPsp"
+RECAPTCHA_PUBLIC_KEY = "6LcP3xEmAAAAAGFu3wfqJHjJ7MylHAQSa29anoF-" # to na później

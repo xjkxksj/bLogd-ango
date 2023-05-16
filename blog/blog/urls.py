@@ -18,10 +18,9 @@ from django.urls import path
 from body.views import frontpage, authors, login, register, favourites
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", frontpage, name="frontpage"),
-    path("authors/", authors, name="authors"),
-    path("login/", login, name="login"),
-    path("login/register/", register, name="register"),
-    path("favourites/", favourites, name="favourites"),
+    path('', frontpage, name='frontpage'),
+    path('authors/', authors, name='authors'),
+    path('login/', login, name='login'),
+    path('register/', register, name='register'),
+    path('favourites/', favourites, name='favourites'),
 ]
