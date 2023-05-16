@@ -113,9 +113,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-RECAPTCHA_PRIVATE_KEY = "6LcP3xEmAAAAAAmb3iNOuL5IdR5WJLkEkOu0hPsp"
-RECAPTCHA_PUBLIC_KEY = "6LcP3xEmAAAAAGFu3wfqJHjJ7MylHAQSa29anoF-"
-# to na później
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -126,5 +123,6 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 CSRF_TRUSTED_ORIGINS = ['http://*.dev', 'https://*.dev']
+RECAPTCHA_PRIVATE_KEY = "6LcP3xEmAAAAAAmb3iNOuL5IdR5WJLkEkOu0hPsp"
+RECAPTCHA_PUBLIC_KEY = "6LcP3xEmAAAAAGFu3wfqJHjJ7MylHAQSa29anoF-" # to na później
