@@ -1,0 +1,9 @@
+{% extends 'body/welcome.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Account Information</h1>
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Nickname: {{ user.nickname }}</p>
+{% endblock %}

@@ -1,27 +1,22 @@
-"""blog URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
-from body.views import frontpage, authors, login, register, favourites
+from body.views import (
+    frontpage_view,
+    authors_view,
+    login_view,
+    register_view,
+    favourites_view,
+    account_view,
+    logout_view,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', frontpage, name='frontpage'),
-    path('authors/', authors, name='authors'),
-    path('login/', login, name='login'),
-    path('register/', register, name='register'),
-    path('favourites/', favourites, name='favourites')
+    path('', frontpage_view, name='frontpage'),
+    path('authors/', authors_view, name='authors'),
+    path('login/', login_view, name='login'),
+    path('register/', register_view, name='register'),
+    path('favourites/', favourites_view, name='favourites'),
+    path('account/', account_view, name='account'),
+    path('', logout_view, name='logout'),
 ]

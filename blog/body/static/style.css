@@ -6,16 +6,16 @@
 }
 
 body {
-    overflow-y: scroll; /* Dodajemy pionowy scrollbar do strony */
+    overflow-y: scroll;
 }
 
 .container {
     margin-top: 80px;
-    height: 1000px; /* Przykładowa wysokość dla testowego efektu przewijania */
+    height: 1000px;
     padding: 20px;
 }
 
-form {
+.form {
     background: white;
     width: 300px;
     height: 45px;
@@ -26,7 +26,7 @@ form {
     right: 200px;
 }
 
-form input {
+.form input {
     flex: 1;
     border: none;
     outline: none;
@@ -35,7 +35,7 @@ form input {
     text-align: center;
 }
 
-form button {
+.form button {
     background: red;
     padding: 10px 10px;
     border: none;
@@ -62,6 +62,7 @@ form button {
     top: 20px;
     right: 20px;
 }
+
 
 .user-button button,
 .favourite-button button,
@@ -142,8 +143,10 @@ form button {
 }
 
 .login-form label {
-    display: block;
+    display: flex;
     margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-form input {
@@ -180,8 +183,11 @@ form button {
 }
 
 .register-form label {
-    display: block;
+    display: flex;
     margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .register-form input {
@@ -223,27 +229,34 @@ form button {
 }
 @keyframes backgroundTransition {
     0% {
-        background-image: url('login-background1.jpg');
+      opacity: 1;
+      background-image: url('login-background1.jpg');
     }
     10% {
-        background-image: url('login-background1.jpg');
+      opacity: 1;
+      background-image: url('login-background1.jpg');
     }
     30% {
-        background-image: url('login-background2.jpg');
+      opacity: 1;
+      background-image: url('login-background2.jpg');
     }
     50% {
-        background-image: url('login-background3.jpg');
+      opacity: 1;
+      background-image: url('login-background3.jpg');
     }
     70% {
-        background-image: url('login-background4.jpg');
+      opacity: 1;
+      background-image: url('login-background4.jpg');
     }
     90% {
-        background-image: url('login-background5.jpg');
+      opacity: 1;
+      background-image: url('login-background5.jpg');
     }
     100% {
-        background-image: url('login-background1.jpg');
+      opacity: 1;
+      background-image: url('login-background1.jpg');
     }
-}
+  }
 
 .home-button, .signup-button, .login-button {
     background: gray;
@@ -356,7 +369,7 @@ form.search-form {
     justify-content: space-between;
     padding: 0 20px;
     z-index: 9999;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Dodajemy cień do paska nawigacyjnego */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar button {
@@ -370,7 +383,7 @@ form.search-form {
 }
 
 .search-form {
-    margin-right: 20px; /* Dodajemy margines po prawej stronie paska nawigacyjnego */
+    margin-right: 20px;
 }
 
 .search-form input {
@@ -422,9 +435,48 @@ form.search-form {
 }
 
 .category-buttons button:hover {
-    background-color: darkred;
+    background-color: red;
 }
 
 .category-buttons button:hover i {
+    color: white;
+}
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+
+  .account-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.account-buttons button {
+    background: red;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-buttons button i {
+    padding: 7px;
+    color: white;
+}
+
+.account-buttons button:hover {
+    background-color: red;
+}
+
+.account-buttons button:hover i {
     color: white;
 }

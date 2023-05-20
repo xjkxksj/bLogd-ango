@@ -1,26 +1,39 @@
 {% extends 'body/welcome.html' %}
 {% load static %}
+
 {% block content %}
 <div class="background-image"></div>
 <div class="login-page">
-    <form class="login-form">
-        <h2>Login</h2>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        
-        <div class="button-container">
-            <button onclick="location.href='/register/'"; type="submit" class="signup-button">
-                <i class="fa-solid fa-user-plus" style="color: white;"></i>
-            </button>
-            <button onclick="location.href='/'"; type="button" class="home-button">
-                <i class="fa-solid fa-house" style="color: white;"></i>
-            </button>
-            <button type="submit" class="login-button">
-                <i class="fa-solid fa-arrow-right" style="color: white;"></i>
-            </button>
-        </div>
-    </form>
+  <form class="login-form" method="POST">
+    {% csrf_token %}
+    <h2>Login</h2>
+    {% if error_message %}
+    <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+    {% if messages %}
+      {% for message in messages %}
+        <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+    <div class="form-field">
+      <label for="id_username">Username:</label>
+      <input type="text" name="username" id="id_username" required>
+    </div>
+    <div class="form-field">
+      <label for="id_password">Password:</label>
+      <input type="password" name="password" id="id_password" required>
+    </div>
+    <div class="button-container">
+        <button onclick="location.href='/register/'" type="button" class="signup-button">
+            <i class="fa-solid fa-user-plus" style="color: white;"></i>
+        </button>
+        <button onclick="location.href='/'"; type="button" class="home-button">
+            <i class="fa-solid fa-house" style="color: white;"></i>
+        </button>
+        <button type="submit" class="login-button">
+            <i class="fa-solid fa-sign-in" style="color: white;"></i>
+        </button>
+    </div>
+  </form>
 </div>
 {% endblock %}

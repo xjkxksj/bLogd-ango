@@ -1,19 +1,20 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class User(models.Model):
-    login = models.CharField(max_length=30)
-    password = models.CharField(max_length=30)
-    email = models.CharField(max_length=50)
-    date_of_registration = models.DateTimeField("Date of registration")
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.user.username if self.user else 'No user'
 
 
 class Post(models.Model):
     title = models.CharField(max_length=30)
     content = models.CharField(max_length=500)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_added_date = models.DateTimeField("Post added date")
+    post_added_date = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField()
 
 
@@ -34,7 +35,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.CharField(max_length=500)
-    post_added_date = models.DateTimeField("Post added date")
+    post_added_date = models.DateTimeField(auto_now_add=True)
 
 
 class Password(models.Model):
