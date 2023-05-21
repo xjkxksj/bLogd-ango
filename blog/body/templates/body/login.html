@@ -2,38 +2,43 @@
 {% load static %}
 
 {% block content %}
-<div class="background-image"></div>
-<div class="login-page">
-  <form class="login-form" method="POST">
-    {% csrf_token %}
-    <h2>Login</h2>
-    {% if error_message %}
-    <p class="error-message">{{ error_message }}</p>
-    {% endif %}
-    {% if messages %}
-      {% for message in messages %}
-        <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
-      {% endfor %}
-    {% endif %}
-    <div class="form-field">
-      <label for="id_username">Username:</label>
-      <input type="text" name="username" id="id_username" required>
+    <div class="background-image"></div>
+    <div class="login-page">
+        <form class="login-form" method="POST">
+            {% csrf_token %}
+            <h2>Login</h2>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <p class="error-message">{{ message }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <div class="form-field">
+                <label for="id_username">Username:</label>
+                <input type="text" name="username" id="id_username" class="form-control" required>
+                {% if form.errors.username %}
+                    <p class="error-message">{{ form.errors.username }}</p>
+                {% endif %}
+            </div>
+            <div class="form-field">
+                <label for="id_password">Password:</label>
+                <input type="password" name="password" id="id_password" class="form-control" required>
+                {% if form.errors.password %}
+                    <p class="error-message">{{ form.errors.password }}</p>
+                {% endif %}
+            </div>
+            <div class="button-container">
+                <button onclick="location.href='/register/'" type="button" class="signup-button">
+                    <i class="fa-solid fa-user-plus" style="color: white;"></i>
+                </button>
+                <button onclick="location.href='/'"; type="button" class="home-button">
+                    <i class="fa-solid fa-house" style="color: white;"></i>
+                </button>
+                <button type="submit" class="login-button">
+                    <i class="fa-solid fa-sign-in" style="color: white;"></i>
+                </button>
+            </div>
+        </form>
     </div>
-    <div class="form-field">
-      <label for="id_password">Password:</label>
-      <input type="password" name="password" id="id_password" required>
-    </div>
-    <div class="button-container">
-        <button onclick="location.href='/register/'" type="button" class="signup-button">
-            <i class="fa-solid fa-user-plus" style="color: white;"></i>
-        </button>
-        <button onclick="location.href='/'"; type="button" class="home-button">
-            <i class="fa-solid fa-house" style="color: white;"></i>
-        </button>
-        <button type="submit" class="login-button">
-            <i class="fa-solid fa-sign-in" style="color: white;"></i>
-        </button>
-    </div>
-  </form>
-</div>
 {% endblock %}

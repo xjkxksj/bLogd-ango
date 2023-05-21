@@ -18,5 +18,5 @@ urlpatterns = [
     path('register/', register_view, name='register'),
     path('favourites/', favourites_view, name='favourites'),
     path('account/', account_view, name='account'),
-    path('', logout_view, name='logout'),
+    path('logout/', logout_view, name='logout'),
 ]

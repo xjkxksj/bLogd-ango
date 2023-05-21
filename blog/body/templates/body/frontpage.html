@@ -1,49 +1,50 @@
 {% extends 'body/welcome.html' %}
 {% load static %}
+
 {% block content %}
-<script src="{% static 'logout.js' %}"></script>
-<div class="navbar">
-    <div class="logo">
-        <img src="{% static 'PenSpot.png' %}" alt="Logo">
-    </div>
-    <form class="search-form">
-        <input type="text" placeholder="Search what you need">
-        <button type="submit">
-            <i class="fa-solid fa-magnifying-glass" style="color: white;"></i>
-        </button>
-    </form>
-    <div class="account-buttons">
-        <button onclick="location.href='account/'">
-            Account
-        </button>
-    </div>
-    <div class="account-buttons">
-        <form id="logout-form" method="post" action="{% url 'logout' %}">
-          {% csrf_token %}
-          <button id="logout-button" onclick="logoutUser()">Logout</button>
+    <script src="{% static 'logout.js' %}"></script>
+    <div class="navbar">
+        <div class="logo">
+            <img src="{% static 'PenSpot.png' %}" alt="Logo">
+        </div>
+        <form class="search-form">
+            <input type="text" placeholder="Search what you need">
+            <button type="submit">
+                <i class="fa-solid fa-magnifying-glass" style="color: white;"></i>
+            </button>
         </form>
-    </div>
-    <div class="category-buttons">
-        <button>Category 1</button>
-        <button>Category 2</button>
-        <button onclick="location.href='authors/'">O nas</button>
-    </div>
-    <div class="user-fav-container button-container">
-        <div class="user-button {% if is_user_logged_in %}visible{% endif %}">
-            <button onclick="location.href='login/'">
-                <i class="fas fa-user" style="color: white;"></i>
+        <div class="account-buttons">
+            <button onclick="location.href='account/'">
+                Account
             </button>
         </div>
-        <div class="favourite-button">
-            <button onclick="location.href='favourites/'">
-                <i class="fas fa-heart" style="color: white;"></i>
-            </button>
+        <div class="account-buttons">
+            <form id="logout-form" method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button id="logout-button" onclick="logoutUser()">Logout</button>
+            </form>
         </div>
-        <div class="admin-button">
-            <button onclick="location.href='admin/'">
-                <i class="fa-solid fa-lock" style="color: white;"></i>
-            </button>
+        <div class="category-buttons">
+            <button>Category 1</button>
+            <button>Category 2</button>
+            <button onclick="location.href='authors/'">O nas</button>
+        </div>
+        <div class="user-fav-container button-container">
+            <div class="user-button {% if is_user_logged_in %}visible{% endif %}">
+                <button onclick="location.href='login/'">
+                    <i class="fas fa-user" style="color: white;"></i>
+                </button>
+            </div>
+            <div class="favourite-button">
+                <button onclick="location.href='favourites/'">
+                    <i class="fas fa-heart" style="color: white;"></i>
+                </button>
+            </div>
+            <div class="admin-button">
+                <button onclick="location.href='admin/'">
+                    <i class="fa-solid fa-lock" style="color: white;"></i>
+                </button>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

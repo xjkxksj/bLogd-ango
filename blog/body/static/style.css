@@ -63,7 +63,6 @@ body {
     right: 20px;
 }
 
-
 .user-button button,
 .favourite-button button,
 .admin-button button,
@@ -256,7 +255,7 @@ body {
       opacity: 1;
       background-image: url('login-background1.jpg');
     }
-  }
+}
 
 .home-button, .signup-button, .login-button {
     background: gray;
@@ -446,7 +445,7 @@ form.search-form {
     color: red;
     margin-top: 5px;
     font-size: 14px;
-  }
+}
 
   .account-buttons {
     display: flex;
