@@ -44,12 +44,13 @@ body {
     color: white;
     letter-spacing: 1px;
     cursor: pointer;
+    height: 45px;
 }
 
 .user-button {
     position: fixed;
     top: 20px;
-    right: 140px;
+    right: 80px;
 }
 
 .favourite-button {
@@ -57,7 +58,8 @@ body {
     top: 20px;
     right: 80px;
 }
-.admin-button{
+
+.admin-button {
     position: fixed;
     top: 20px;
     right: 20px;
@@ -91,13 +93,15 @@ body {
 
 .fa-magnifying-glass,
 .fa-user,
+.fa-user-secret,
 .fa-heart,
 .fa-lock,
 .fa-user-plus,
 .fa-house,
 .fa-arrow-right,
 .fa-arrow-left,
-.fa-plus {
+.fa-plus,
+.fa-sign-in {
     align-self: center;
     padding: 7px;
     color: red;
@@ -119,7 +123,7 @@ body {
     padding: 20px;
 }
 
-.register-form{
+.register-form {
     background: white;
     width: 300px;
     height: auto;
@@ -172,7 +176,7 @@ body {
 }
 
 .login-form button:hover {
-    background-color: red;
+    background-color: darkred;
 }
 
 .register-form h2 {
@@ -213,8 +217,9 @@ body {
 }
 
 .register-form button:hover {
-    background-color: red;
+    background-color: darkred;
 }
+
 .background-image {
     background-size: cover;
     background-position: center center;
@@ -226,38 +231,41 @@ body {
     z-index: -1;
     animation: backgroundTransition 20s infinite;
 }
+
 @keyframes backgroundTransition {
     0% {
-      opacity: 1;
-      background-image: url('login-background1.jpg');
+        opacity: 1;
+        background-image: url('login-background1.jpg');
     }
     10% {
-      opacity: 1;
-      background-image: url('login-background1.jpg');
+        opacity: 1;
+        background-image: url('login-background1.jpg');
     }
     30% {
-      opacity: 1;
-      background-image: url('login-background2.jpg');
+        opacity: 1;
+        background-image: url('login-background2.jpg');
     }
     50% {
-      opacity: 1;
-      background-image: url('login-background3.jpg');
+        opacity: 1;
+        background-image: url('login-background3.jpg');
     }
     70% {
-      opacity: 1;
-      background-image: url('login-background4.jpg');
+        opacity: 1;
+        background-image: url('login-background4.jpg');
     }
     90% {
-      opacity: 1;
-      background-image: url('login-background5.jpg');
+        opacity: 1;
+        background-image: url('login-background5.jpg');
     }
     100% {
-      opacity: 1;
-      background-image: url('login-background1.jpg');
+        opacity: 1;
+        background-image: url('login-background1.jpg');
     }
 }
 
-.home-button, .signup-button, .login-button {
+.home-button,
+.signup-button,
+.login-button {
     background: gray;
     padding: 10px 10px;
     border: none;
@@ -269,17 +277,21 @@ body {
     font-size: 16px;
     transition: background-color 0.3s ease;
 }
-.home-button:hover, .signup-button:hover, .login-button:hover {
-    background-color: gray;
+
+.home-button:hover,
+.signup-button:hover,
+.login-button:hover {
+    background-color: darkgray;
 }
 
-.login-form button:not(:first-of-type){
+.login-form button:not(:first-of-type) {
     margin-left: 10px;
 }
 
-.register-form button:not(:first-of-type){
+.register-form button:not(:first-of-type) {
     margin-left: 10px;
 }
+
 .form input:not(:last-of-type) {
     margin-bottom: 10px;
 }
@@ -309,6 +321,11 @@ form.search-form {
     position: fixed;
     top: 20px;
     right: 200px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
 }
 
 .register-form input {
@@ -382,7 +399,10 @@ form.search-form {
 }
 
 .search-form {
-    margin-right: 20px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
 .search-form input {
@@ -393,6 +413,7 @@ form.search-form {
     padding: 10px;
     text-align: center;
     width: 100%;
+    height: 100%;
 }
 
 .search-form button {
@@ -404,6 +425,11 @@ form.search-form {
     color: white;
     letter-spacing: 1px;
     cursor: pointer;
+    height: 100%;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    height: 45px;
 }
 
 .category-buttons {
@@ -434,7 +460,7 @@ form.search-form {
 }
 
 .category-buttons button:hover {
-    background-color: red;
+    background-color: darkred;
 }
 
 .category-buttons button:hover i {
@@ -447,7 +473,7 @@ form.search-form {
     font-size: 14px;
 }
 
-  .account-buttons {
+.account-buttons {
     display: flex;
     align-items: center;
 }
@@ -465,17 +491,31 @@ form.search-form {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 45px;
 }
 
 .account-buttons button i {
+    align-self: center;
+    padding: 7px;
+    color: white;
+}
+
+.search-form button i {
+    align-self: center;
     padding: 7px;
     color: white;
 }
 
 .account-buttons button:hover {
-    background-color: red;
+    background-color: darkred;
 }
 
 .account-buttons button:hover i {
     color: white;
+}
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+    font-size: 14px;
 }

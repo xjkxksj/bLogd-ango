@@ -1,9 +1,20 @@
 {% extends 'body/welcome.html' %}
 {% load static %}
-
 {% block content %}
-    <h1>Account Information</h1>
-    <p>Username: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>Nickname: {{ user.nickname }}</p>
+    <div class="background-image"></div>
+    <div class="account-page">
+        <div class="login-form">
+            <h2>Welcome, {{ user_profile.user.username }}!</h2>
+            <p>Email: {{ user_profile.user.email }}</p>
+            <p>Nickname: {{ user_profile.nickname }}</p>
+            <div class="button-container">
+                <button onclick="location.href='/'" type="button" class="home-button">
+                    <i class="fa-solid fa-house" style="color: white;"></i>
+                </button>
+                <button onclick="location.href='/favourites/'" type="button" class="favourites-button">
+                    <i class="fas fa-heart" style="color: white;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 {% endblock %}

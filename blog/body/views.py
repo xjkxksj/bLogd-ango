@@ -3,12 +3,14 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, UserLoginForm
+from .models import UserProfile
 
 def register_view(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            UserProfile.objects.create(user=user, nickname=form.cleaned_data['nickname'])
             messages.success(request, 'Registration successful. You can now log in.')
             return redirect('login')
         else:
@@ -36,9 +38,9 @@ def login_view(request):
 
 @login_required
 def account_view(request):
-    user = request.user
+    user_profile = UserProfile.objects.get(user=request.user)
     context = {
-        'user': user,
+        'user_profile': user_profile,
     }
     return render(request, 'account.html', context)
 
