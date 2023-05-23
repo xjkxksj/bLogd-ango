@@ -82,11 +82,12 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
+    white-space: nowrap;
 }
 
 .button-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     width: 100%;
 }
@@ -101,13 +102,15 @@ body {
 .fa-arrow-right,
 .fa-arrow-left,
 .fa-plus,
-.fa-sign-in {
+.fa-sign-in,
+.fa-square-plus {
     align-self: center;
     padding: 7px;
     color: red;
 }
 
-.login-form {
+.login-form,
+.create-post-form {
     background: white;
     width: 300px;
     height: auto;
@@ -139,20 +142,23 @@ body {
     padding: 20px;
 }
 
-.login-form h2 {
+.login-form h2,
+.create-post-form h2 {
     margin-bottom: 20px;
     font-size: 24px;
     text-align: center;
 }
 
-.login-form label {
+.login-form label,
+.create-post-form label {
     display: flex;
     margin-bottom: 10px;
     align-items: center;
     justify-content: center;
 }
 
-.login-form input {
+.login-form input,
+.create-post-form input {
     width: 100%;
     padding: 10px;
     border: 2px solid gray;
@@ -161,7 +167,8 @@ body {
     font-size: 16px;
 }
 
-.login-form button {
+.login-form button,
+.create-post-form button{
     background: red;
     padding: 10px 20px;
     border: none;
@@ -175,7 +182,8 @@ body {
     margin: 0;
 }
 
-.login-form button:hover {
+.login-form button:hover,
+.create-post-form button:hover {
     background-color: darkred;
 }
 
@@ -318,14 +326,14 @@ form.search-form {
     height: 45px;
     display: flex;
     border-radius: 15px;
-    position: fixed;
     top: 20px;
     right: 200px;
 }
 
 .search-container {
     display: flex;
-    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
 }
 
 .register-form input {
@@ -382,10 +390,18 @@ form.search-form {
     height: 80px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0 20px;
     z-index: 9999;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navigation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    margin-left: auto;
 }
 
 .navbar button {
@@ -393,8 +409,37 @@ form.search-form {
     color: #FFFFFF;
 }
 
+.nav-button {
+    background: red;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-left: 10px;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+}
+
+.nav-button i {
+    padding: 7px;
+    color: white;
+}
+
+.nav-button:hover {
+    background-color: darkred;
+}
+
+.nav-button:hover i {
+    color: white;
+}
+
 .logo img {
-    height: 100px;
+    height: 80px;
     width: 100px;
 }
 
@@ -403,6 +448,7 @@ form.search-form {
     display: flex;
     align-items: center;
     height: 100%;
+    width: 200px;
 }
 
 .search-form input {
@@ -476,6 +522,7 @@ form.search-form {
 .account-buttons {
     display: flex;
     align-items: center;
+    margin-left: 60px;
 }
 
 .account-buttons button {
@@ -518,4 +565,52 @@ form.search-form {
     color: red;
     margin-top: 5px;
     font-size: 14px;
+}
+
+.login-form .form-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form .form-header .logo-container {
+    margin-bottom: 0;
+}
+
+.login-form .form-header .divider {
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.login-form .form-content.authors {
+    padding: 10px;
+}
+
+.login-form .form-content.authors h2 {
+    margin-bottom: 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.form-group .textarea-container textarea {
+    width: 600px;
+    height: 250px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+  
+.create-post-form {
+    width: 800px;
+    height: 500px;
 }

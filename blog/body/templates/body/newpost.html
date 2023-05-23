@@ -1,0 +1,30 @@
+{% extends 'body/welcome.html' %}
+{% load static %}
+{% block content %}
+    <div class="background-image"></div>
+    <div class="account-page">
+        <div class="create-post-form">
+            <div class="form-header">
+                <h2>Create Post</h2>
+            </div>
+            <form method="post" action="{% url 'newpost' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="input-container">
+                        <label for="title">Title:</label>
+                        <input type="text" class="form-control fixed-height login-input" id="title" name="title" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="content">Content:</label>
+                    <div class="textarea-container">
+                        <textarea class="form-control expandable login-input" id="content" name="content" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary fixed-button">Create Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

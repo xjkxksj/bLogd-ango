@@ -1,8 +1,32 @@
 {% extends 'body/welcome.html' %}
-
+{% load static %}
 {% block content %}
-    <h1>Authors:</h1>
-        <h2>Kacper Tomaszewski</h2>
-        <h2>Szymon Trybułowski</h2>
-        <h2>Mateusz Szabłowski</h2>
+    <div class="background-image"></div>
+    <div class="account-page">
+        <div class="login-form">
+            <div class="form-header">
+                <div class="logo-container">
+                    <img src="{% static 'PenSpotLogo.png' %}" alt="Logo">
+                </div>
+                <div class="form-content authors">
+                    <div class="divider"></div>
+                    <h2>Authors:</h2>
+                    <div class="author">
+                        <h3>Kacper Tomaszewski</h3>
+                    </div>
+                    <div class="author">
+                        <h3>Szymon Trybułowski</h3>
+                    </div>
+                    <div class="author">
+                        <h3>Mateusz Szabłowski</h3>
+                    </div>
+                    <div class="button-container">
+                        <button onclick="location.href='/'"; type="button" class="home-button">
+                            <i class="fa-solid fa-house" style="color: white;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

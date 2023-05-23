@@ -8,6 +8,7 @@ from body.views import (
     favourites_view,
     account_view,
     logout_view,
+    newpost_view,
 )
 
 urlpatterns = [
@@ -19,4 +20,5 @@ urlpatterns = [
     path('favourites/', favourites_view, name='favourites'),
     path('account/', account_view, name='account'),
     path('logout/', logout_view, name='logout'),
+    path('newpost/', newpost_view, name='newpost'),
 ]
