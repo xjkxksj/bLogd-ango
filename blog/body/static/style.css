@@ -15,74 +15,10 @@ body {
     padding: 20px;
 }
 
-.form {
-    background: white;
-    width: 300px;
-    height: 45px;
+.search-container {
     display: flex;
-    border-radius: 15px;
-    position: fixed;
-    top: 20px;
-    right: 200px;
-}
-
-.form input {
-    flex: 1;
-    border: none;
-    outline: none;
-    border-radius: 15px;
-    padding: 10px;
-    text-align: center;
-}
-
-.form button {
-    background: red;
-    padding: 10px 10px;
-    border: none;
-    border-radius: 15px;
-    outline: none;
-    color: white;
-    letter-spacing: 1px;
-    cursor: pointer;
-    height: 45px;
-}
-
-.user-button {
-    position: fixed;
-    top: 20px;
-    right: 80px;
-}
-
-.favourite-button {
-    position: fixed;
-    top: 20px;
-    right: 80px;
-}
-
-.admin-button {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-}
-
-.user-button button,
-.favourite-button button,
-.admin-button button,
-.button-container button {
-    background: red;
-    padding: 10px 10px;
-    border: none;
-    border-radius: 15px;
-    outline: none;
-    color: white;
-    letter-spacing: 1px;
-    cursor: pointer;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    white-space: nowrap;
+    justify-content: flex-end;
+    margin-left: auto;
 }
 
 .button-container {
@@ -109,8 +45,37 @@ body {
     color: red;
 }
 
-.login-form,
-.create-post-form {
+.form {
+    background: white;
+    width: 300px;
+    height: 45px;
+    display: flex;
+    border-radius: 15px;
+    position: fixed;
+    top: 20px;
+    right: 200px;
+}
+
+.form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+}
+
+form.search-form {
+    background: white;
+    width: 300px;
+    height: 45px;
+    display: flex;
+    border-radius: 15px;
+    top: 20px;
+    right: 200px;
+}
+
+form.register-form {
     background: white;
     width: 300px;
     height: auto;
@@ -126,6 +91,51 @@ body {
     padding: 20px;
 }
 
+.form button,
+.user-button button,
+.favourite-button button,
+.admin-button button,
+.button-container button {
+    background: red;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.form input:not(:last-of-type) {
+    margin-bottom: 10px;
+}
+
+.user-button {
+    position: fixed;
+    top: 20px;
+    right: 80px;
+}
+
+.favourite-button {
+    position: fixed;
+    top: 20px;
+    right: 80px;
+}
+
+.admin-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+.login-form,
+.create-post-form,
 .register-form {
     background: white;
     width: 300px;
@@ -142,65 +152,8 @@ body {
     padding: 20px;
 }
 
-.login-form h2,
-.create-post-form h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    text-align: center;
-}
-
-.login-form label,
-.create-post-form label {
-    display: flex;
-    margin-bottom: 10px;
-    align-items: center;
-    justify-content: center;
-}
-
 .login-form input,
-.create-post-form input {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid gray;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    font-size: 16px;
-}
-
-.login-form button,
-.create-post-form button{
-    background: red;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 15px;
-    outline: none;
-    color: white;
-    letter-spacing: 1px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    margin: 0;
-}
-
-.login-form button:hover,
-.create-post-form button:hover {
-    background-color: darkred;
-}
-
-.register-form h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    text-align: center;
-}
-
-.register-form label {
-    display: flex;
-    margin-bottom: 10px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
+.create-post-form input,
 .register-form input {
     width: 100%;
     padding: 10px;
@@ -210,6 +163,8 @@ body {
     font-size: 16px;
 }
 
+.login-form button,
+.create-post-form button,
 .register-form button {
     background: red;
     padding: 10px 20px;
@@ -224,51 +179,35 @@ body {
     margin: 0;
 }
 
+.login-form label,
+.create-post-form label,
+.register-form label {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.login-form h2,
+.create-post-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.login-form button:hover,
+.create-post-form button:hover,
 .register-form button:hover {
     background-color: darkred;
 }
 
-.background-image {
-    background-size: cover;
-    background-position: center center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    animation: backgroundTransition 20s infinite;
+.login-form button:not(:first-of-type) {
+    margin-left: 10px;
 }
 
-@keyframes backgroundTransition {
-    0% {
-        opacity: 1;
-        background-image: url('login-background1.jpg');
-    }
-    10% {
-        opacity: 1;
-        background-image: url('login-background1.jpg');
-    }
-    30% {
-        opacity: 1;
-        background-image: url('login-background2.jpg');
-    }
-    50% {
-        opacity: 1;
-        background-image: url('login-background3.jpg');
-    }
-    70% {
-        opacity: 1;
-        background-image: url('login-background4.jpg');
-    }
-    90% {
-        opacity: 1;
-        background-image: url('login-background5.jpg');
-    }
-    100% {
-        opacity: 1;
-        background-image: url('login-background1.jpg');
-    }
+.register-form button:not(:first-of-type) {
+    margin-left: 10px;
 }
 
 .home-button,
@@ -292,50 +231,6 @@ body {
     background-color: darkgray;
 }
 
-.login-form button:not(:first-of-type) {
-    margin-left: 10px;
-}
-
-.register-form button:not(:first-of-type) {
-    margin-left: 10px;
-}
-
-.form input:not(:last-of-type) {
-    margin-bottom: 10px;
-}
-
-form.register-form {
-    background: white;
-    width: 300px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-}
-
-form.search-form {
-    background: white;
-    width: 300px;
-    height: 45px;
-    display: flex;
-    border-radius: 15px;
-    top: 20px;
-    right: 200px;
-}
-
-.search-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-left: auto;
-}
-
 .register-form input {
     width: 100%;
     padding: 10px;
@@ -356,29 +251,6 @@ form.search-form {
 
 .register-form input:invalid {
     border-color: red;
-}
-
-.captcha-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.captcha-input {
-    flex: 1;
-    padding: 10px;
-    border: 2px solid gray;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-}
-
-.captcha-image {
-    width: 150px;
-    height: 45px;
-    border-radius: 5px;
-    margin-left: 10px;
 }
 
 .navbar {
@@ -438,11 +310,6 @@ form.search-form {
     color: white;
 }
 
-.logo img {
-    height: 80px;
-    width: 100px;
-}
-
 .search-form {
     flex: 1;
     display: flex;
@@ -476,6 +343,12 @@ form.search-form {
     display: flex;
     align-items: center;
     height: 45px;
+}
+
+.search-form button i {
+    align-self: center;
+    padding: 7px;
+    color: white;
 }
 
 .category-buttons {
@@ -513,12 +386,6 @@ form.search-form {
     color: white;
 }
 
-.error-message {
-    color: red;
-    margin-top: 5px;
-    font-size: 14px;
-}
-
 .account-buttons {
     display: flex;
     align-items: center;
@@ -547,24 +414,12 @@ form.search-form {
     color: white;
 }
 
-.search-form button i {
-    align-self: center;
-    padding: 7px;
-    color: white;
-}
-
 .account-buttons button:hover {
     background-color: darkred;
 }
 
 .account-buttons button:hover i {
     color: white;
-}
-
-.error-message {
-    color: red;
-    margin-top: 5px;
-    font-size: 14px;
 }
 
 .login-form .form-header {
@@ -613,4 +468,58 @@ form.search-form {
 .create-post-form {
     width: 800px;
     height: 500px;
+}
+
+.logo img {
+    height: 80px;
+    width: 100px;
+}
+
+.background-image {
+    background-size: cover;
+    background-position: center center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    animation: backgroundTransition 20s infinite;
+}
+
+@keyframes backgroundTransition {
+    0% {
+        opacity: 1;
+        background-image: url('login-background1.jpg');
+    }
+    10% {
+        opacity: 1;
+        background-image: url('login-background1.jpg');
+    }
+    30% {
+        opacity: 1;
+        background-image: url('login-background2.jpg');
+    }
+    50% {
+        opacity: 1;
+        background-image: url('login-background3.jpg');
+    }
+    70% {
+        opacity: 1;
+        background-image: url('login-background4.jpg');
+    }
+    90% {
+        opacity: 1;
+        background-image: url('login-background5.jpg');
+    }
+    100% {
+        opacity: 1;
+        background-image: url('login-background1.jpg');
+    }
+}
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+    font-size: 14px;
 }

@@ -3,7 +3,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, UserLoginForm, NewPostForm
-from .models import UserProfile, Post
+from .models import UserProfile
+from django.utils import timezone
 
 def register_view(request):
     if request.method == 'POST':
@@ -39,8 +40,14 @@ def login_view(request):
 @login_required
 def account_view(request):
     user_profile = UserProfile.objects.get(user=request.user)
+    registration_date = request.user.date_joined.date()
+    registration_date = timezone.make_aware(
+        timezone.datetime.combine(registration_date, timezone.datetime.min.time())
+    )
+    registration_date = timezone.localtime(registration_date)
     context = {
         'user_profile': user_profile,
+        'registration_date': registration_date,
     }
     return render(request, 'account.html', context)
 
@@ -61,11 +68,9 @@ def newpost_view(request):
     if request.method == 'POST':
         form = NewPostForm(request.POST)
         if form.is_valid():
-
             return redirect('frontpage') 
     else:
         form = NewPostForm()
-    
     context = {'form': form}
     return render(request, 'newpost.html', context)
 
