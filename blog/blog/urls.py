@@ -9,7 +9,10 @@ from body.views import (
     account_view,
     logout_view,
     newpost_view,
+    latestposts_view
 )
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -21,4 +24,5 @@ urlpatterns = [
     path('account/', account_view, name='account'),
     path('logout/', logout_view, name='logout'),
     path('newpost/', newpost_view, name='newpost'),
-]
+    path('latestposts/', latestposts_view, name='latestposts'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -42,3 +42,10 @@ class UserLoginForm(forms.Form):
 class NewPostForm(forms.Form):
     title = forms.CharField(label='Title', max_length=100)
     content = forms.CharField(label='Content', widget=forms.Textarea)
+    image = forms.ImageField(label='Image')
+
+    def save(self, user):
+        title = self.cleaned_data['title']
+        content = self.cleaned_data['content']
+        post = Post.objects.create(title=title, content=content, user=user)
+        return post
