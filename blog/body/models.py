@@ -10,7 +10,7 @@ class UserProfile(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=30)
-    content = models.CharField(max_length=500)
+    content = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post_added_date = models.DateTimeField(auto_now_add=True)
 
