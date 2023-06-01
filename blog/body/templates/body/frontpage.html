@@ -10,7 +10,9 @@
             <div class="account-buttons">
                 <button class="nav-button" onclick="location.href='#'">Przycisk 2</button>
                 <button class="nav-button" onclick="location.href='#'">Przycisk 3</button>
-                <button class="nav-button" onclick="location.href='#'">Przycisk 4</button>
+                <button class="nav-button" onclick="location.href='latestposts/'">
+                    <i class="fa-solid fa-list-ul" style="color: white;"></i>
+                </button>
                 {% if user.is_authenticated %}
                     <button class="nav-button" onclick="location.href='newpost/'">
                         <i class="fa-solid fa-square-plus" style="color: white;"></i>

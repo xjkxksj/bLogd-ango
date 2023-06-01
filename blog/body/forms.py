@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from .models import Post
 
 User = get_user_model()
 
@@ -42,7 +43,7 @@ class UserLoginForm(forms.Form):
 class NewPostForm(forms.Form):
     title = forms.CharField(label='Title', max_length=100)
     content = forms.CharField(label='Content', widget=forms.Textarea)
-    image = forms.ImageField(label='Image')
+    image = forms.ImageField(label='Image', required=False)
 
     def save(self, user):
         title = self.cleaned_data['title']

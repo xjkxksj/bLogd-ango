@@ -5,7 +5,10 @@ from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, UserLoginForm, NewPostForm
 from .models import UserProfile, Post
 from django.utils import timezone
-from PIL import Image as PILImage
+from PIL import Image
+from io import BytesIO
+import os
+from django.urls import reverse
 
 def register_view(request):
     if request.method == 'POST':
@@ -64,25 +67,25 @@ def frontpage_view(request):
     }
     return render(request, 'frontpage.html', context)
 
-from .models import Image
-
 @login_required
 def newpost_view(request):
     if request.method == 'POST':
         form = NewPostForm(request.POST, request.FILES)
         if form.is_valid():
-            title = form.cleaned_data['title']
-            content = form.cleaned_data['content']
-            image = form.cleaned_data['image']
+            post = form.save(user=request.user)
             
-            post = Post.objects.create(title=title, content=content, image=image, user=request.user)
-
-            return redirect('latest_posts')
+            if 'image' in request.FILES:
+                post.image = request.FILES['image']
+                post.save()
+                
+            messages.success(request, 'Post created successfully.')
+            return redirect(reverse('latestposts'))
+        else:
+            messages.error(request, 'Invalid form data.')
     else:
         form = NewPostForm()
     
     return render(request, 'newpost.html', {'form': form})
-
 
 def authors_view(request):
     return render(request, 'authors.html')
@@ -91,6 +94,9 @@ def favourites_view(request):
     return render(request, 'favourites.html')
 
 def latestposts_view(request):
-    latest_posts = Post.objects.order_by('-post_added_date')[:10]
+    latest_posts = Post.objects.all()
+    for post in latest_posts:
+        print(post.title)
     context = {'latestposts': latest_posts}
     return render(request, 'latestposts.html', context)
+

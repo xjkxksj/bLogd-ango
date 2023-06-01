@@ -13,6 +13,7 @@ class Post(models.Model):
     content = models.CharField(max_length=500)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post_added_date = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -25,7 +26,7 @@ class Image(models.Model):
         ("b", ".bmp"),
         ("g", ".gif"),
     ]
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
     name = models.CharField(max_length=30)
     type = models.CharField(max_length=10, choices=EXTENSION_SELECTION)
 

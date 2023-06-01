@@ -40,7 +40,8 @@ body {
 .fa-arrow-left,
 .fa-plus,
 .fa-sign-in,
-.fa-square-plus {
+.fa-square-plus,
+.fa-list-ul {
     align-self: center;
     padding: 7px;
     color: red;
