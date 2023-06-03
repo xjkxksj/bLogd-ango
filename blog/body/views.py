@@ -1,3 +1,4 @@
+import os
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -6,9 +7,9 @@ from .forms import UserRegistrationForm, UserLoginForm, NewPostForm
 from .models import UserProfile, Post
 from django.utils import timezone
 from PIL import Image
-from io import BytesIO
-import os
 from django.urls import reverse
+from django.core.files import File
+from django.conf import settings
 
 def register_view(request):
     if request.method == 'POST':
@@ -72,19 +73,27 @@ def newpost_view(request):
     if request.method == 'POST':
         form = NewPostForm(request.POST, request.FILES)
         if form.is_valid():
-            post = form.save(user=request.user)
-            
-            if 'image' in request.FILES:
-                post.image = request.FILES['image']
-                post.save()
-                
-            messages.success(request, 'Post created successfully.')
-            return redirect(reverse('latestposts'))
-        else:
-            messages.error(request, 'Invalid form data.')
+            post = form.save(commit=False)
+            post.user = request.user
+            image_file = request.FILES.get('image')
+            image = Image.open(image_file)
+            desired_size = (400, 400)
+            image.thumbnail(desired_size)
+            image_filename = image_file.name
+            image_extension = image_filename.split('.')[-1]
+            temp_image_path = os.path.join(settings.MEDIA_ROOT, 'post_images', f'temp_image.{image_extension}')
+            image.save(temp_image_path)
+
+            with open(temp_image_path, 'rb') as f:
+                post.image.save(image_filename, File(f), save=True)
+
+            os.remove(temp_image_path)
+            post.save()
+
+            return redirect('latestposts')
     else:
         form = NewPostForm()
-    
+
     return render(request, 'newpost.html', {'form': form})
 
 def authors_view(request):
@@ -95,8 +104,6 @@ def favourites_view(request):
 
 def latestposts_view(request):
     latest_posts = Post.objects.all()
-    for post in latest_posts:
-        print(post.title)
     context = {'latestposts': latest_posts}
     return render(request, 'latestposts.html', context)
 

@@ -45,8 +45,12 @@ class NewPostForm(forms.Form):
     content = forms.CharField(label='Content', widget=forms.Textarea)
     image = forms.ImageField(label='Image', required=False)
 
-    def save(self, user):
+    def save(self, user=None, commit=True):
         title = self.cleaned_data['title']
         content = self.cleaned_data['content']
-        post = Post.objects.create(title=title, content=content, user=user)
+        post = Post(title=title, content=content, user=user)
+        
+        if commit:
+            post.save()
+        
         return post
