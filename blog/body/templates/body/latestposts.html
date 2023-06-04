@@ -1,11 +1,11 @@
 {% extends 'body/welcome.html' %}
 {% load static %}
 {% block content %}
-    <div class="latest-posts-wrapper">
+    <div class="latest-posts-wrapper content-wrapper">
         <h1 class="latest-posts-title">Latest Posts</h1>
         <div class="latest-posts-container">
-            {% for post in latestposts reversed %}
-                <div class="post {% if forloop.counter == 2 %}middle-post{% endif %} {% if forloop.counter == 4 %}new-row{% endif %}">
+            {% for post in latestposts %}
+                <div class="post">
                     <div class="post-image">
                         {% if post.image %}
                             <img src="{{ post.image.url }}" alt="Post Image">
@@ -17,6 +17,17 @@
                     </div>
                 </div>
             {% endfor %}
+        </div>
+        <div class="pagination">
+            {% if latestposts.has_previous %}
+                <a href="?page=1"><i class="fas fa-angle-double-left"></i></a>
+                <a href="?page={{ latestposts.previous_page_number }}"><i class="fas fa-angle-left"></i></a>
+            {% endif %}
+            <span class="current-page">{{ latestposts.number }}</span>
+            {% if latestposts.has_next %}
+                <a href="?page={{ latestposts.next_page_number }}"><i class="fas fa-angle-right"></i></a>
+                <a href="?page={{ latestposts.paginator.num_pages }}"><i class="fas fa-angle-double-right"></i></a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

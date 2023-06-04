@@ -10,6 +10,7 @@ from PIL import Image
 from django.urls import reverse
 from django.core.files import File
 from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def register_view(request):
     if request.method == 'POST':
@@ -76,18 +77,23 @@ def newpost_view(request):
             post = form.save(commit=False)
             post.user = request.user
             image_file = request.FILES.get('image')
-            image = Image.open(image_file)
-            desired_size = (400, 400)
-            image.thumbnail(desired_size)
-            image_filename = image_file.name
-            image_extension = image_filename.split('.')[-1]
-            temp_image_path = os.path.join(settings.MEDIA_ROOT, 'post_images', f'temp_image.{image_extension}')
-            image.save(temp_image_path)
+            if image_file:
+                image = Image.open(image_file)
+                desired_size = (400, 400)
+                image.thumbnail(desired_size)
+                image_filename = image_file.name
+                image_extension = image_filename.split('.')[-1]
+                temp_image_path = os.path.join(settings.MEDIA_ROOT, 'post_images', f'temp_image.{image_extension}')
+                image.save(temp_image_path)
+                with open(temp_image_path, 'rb') as f:
+                    post.image.save(image_filename, File(f), save=True)
 
-            with open(temp_image_path, 'rb') as f:
-                post.image.save(image_filename, File(f), save=True)
+                os.remove(temp_image_path)
+            else:
+                no_image_path = os.path.join(settings.MEDIA_ROOT, 'post_images', 'noimage.jpg')
+                with open(no_image_path, 'rb') as f:
+                    post.image.save('noimage.jpg', File(f), save=True)
 
-            os.remove(temp_image_path)
             post.save()
 
             return redirect('latestposts')
@@ -103,7 +109,9 @@ def favourites_view(request):
     return render(request, 'favourites.html')
 
 def latestposts_view(request):
-    latest_posts = Post.objects.all()
+    all_posts = Post.objects.order_by('-post_added_date')
+    paginator = Paginator(all_posts, 9)
+    page_number = request.GET.get('page')
+    latest_posts = paginator.get_page(page_number)
     context = {'latestposts': latest_posts}
     return render(request, 'latestposts.html', context)
-

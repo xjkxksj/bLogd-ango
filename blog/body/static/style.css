@@ -651,6 +651,13 @@ form.register-form {
 
 .latest-posts-wrapper {
     background: linear-gradient(to bottom, white, gray);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .latest-posts-title {
@@ -664,10 +671,10 @@ form.register-form {
 .latest-posts-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     gap: 20px;
-    margin-left: 200px;
-    margin-right: 200px;
+    padding: 0 200px;
+    box-sizing: border-box;
 }
 
 .post.middle-post {
@@ -676,7 +683,7 @@ form.register-form {
 }
 
 .post {
-    width: calc(33.33% - 20px);
+    flex-basis: calc(33.33% - (40px / 3));
     margin-bottom: 20px;
     background-color: white;
     border-radius: 10px;
@@ -685,7 +692,6 @@ form.register-form {
     flex-direction: column;
     justify-content: space-between;
     max-height: 400px;
-    margin-right: 0;
 }
 
 .post-inner-container {
@@ -697,11 +703,34 @@ form.register-form {
 
 .post:nth-child(3n+1) {
     margin-left: 0;
+    margin-right: 0;
+}
+
+.post:nth-child(3n+2) {
+    margin-left: 0;
+    margin-right: auto;
 }
 
 .post:nth-child(3n+3) {
-    margin-right: 20px;
+    margin-left: auto;
+    margin-right: 0;
 }
+
+@media screen and (max-width: 800px) {
+    .latest-posts-container {
+      padding: 0 20px;
+    }
+  
+    .post {
+      flex-basis: calc(50% - (20px / 2));
+    }
+  }
+  
+  @media screen and (max-width: 500px) {
+    .post {
+      flex-basis: 100%;
+    }
+  }
 
 .post-image {
     flex: 4;
@@ -735,4 +764,36 @@ form.register-form {
     font-size: 15px;
     color: grey;
     font-style: italic;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    margin-top: auto;
+}
+  
+.pagination a {
+    margin: 0 5px;
+    color: black;
+    text-decoration: none;
+}
+  
+.current-page {
+    font-weight: bold;
+    margin: 0 5px;
+}
+
+.next-page-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #555;
+    color: #fff;
+    text-decoration: none;
 }
