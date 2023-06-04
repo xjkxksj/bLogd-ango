@@ -1,14 +1,22 @@
 {% extends 'body/welcome.html' %}
 {% load static %}
 {% block content %}
-    <h1>Latest Posts</h1>
-    {% for post in latestposts %}
-        <div class="post">
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.content }}</p>
-        {% if post.image %}
-            <img src="{{ post.image.url }}" alt="Post Image">
-        {% endif %}
+    <div class="latest-posts-wrapper">
+        <h1 class="latest-posts-title">Latest Posts</h1>
+        <div class="latest-posts-container">
+            {% for post in latestposts reversed %}
+                <div class="post {% if forloop.counter == 2 %}middle-post{% endif %} {% if forloop.counter == 4 %}new-row{% endif %}">
+                    <div class="post-image">
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="Post Image">
+                        {% endif %}
+                    </div>
+                    <div class="post-details">
+                        <h2>{{ post.title }}</h2>
+                        <p class="author-info">Posted by <em>{{ post.user.userprofile.nickname }}</em></p>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}
