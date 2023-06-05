@@ -11,42 +11,44 @@
                 <button class="nav-button" onclick="location.href='#'">Przycisk 2</button>
                 <button class="nav-button" onclick="location.href='#'">Przycisk 3</button>
                 <button class="nav-button" onclick="location.href='latestposts/'">
-                    <i class="fa-solid fa-list-ul" style="color: white;"></i>
+                    <i class="fa-solid fa-list-ul"></i>
                 </button>
                 {% if user.is_authenticated %}
                     <button class="nav-button" onclick="location.href='newpost/'">
-                        <i class="fa-solid fa-square-plus" style="color: white;"></i>
+                        <i class="fa-solid fa-square-plus"></i>
                     </button>
                 {% endif %}
-                <button class="nav-button" onclick="location.href='authors/'">Autorzy</button>
+                <button class="nav-button" onclick="location.href='authors/'">
+                    <i class="fa-solid fa-circle-question"></i>
+                </button>
             </div>
         </div>
         <div class="search-container">
             <form class="search-form">
                 <input type="text" placeholder="Search what you need">
                 <button type="submit">
-                    <i class="fa-solid fa-magnifying-glass" style="color: white;"></i>
+                    <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </form>
         </div>
         <div class="account-buttons">
             {% if user.is_authenticated %}
                 <button onclick="location.href='account/'">
-                    <i class="fa-solid fa-user" style="color: white;"></i>
+                    <i class="fa-solid fa-user"></i>
                 </button>
                 <form id="logout-form" method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
                     <button id="logout-button" onclick="logoutUser()">
-                        <i class="fa-solid fa-power-off" style="color: white;"></i>
+                        <i class="fa-solid fa-power-off"></i>
                     </button>
                 </form>
             {% else %}
                 <button onclick="location.href='login/'">
-                    <i class="fa-solid fa-sign-in" style="color: white;"></i>
+                    <i class="fa-solid fa-sign-in"></i>
                 </button>
             {% endif %}
             <button onclick="location.href='admin/'">
-                <i class="fa-solid fa-user-secret" style="color: white;"></i>
+                <i class="fa-solid fa-user-secret"></i>
             </button>
         </div>
     </div>

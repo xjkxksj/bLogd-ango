@@ -46,10 +46,7 @@ def login_view(request):
 @login_required
 def account_view(request):
     user_profile = UserProfile.objects.get(user=request.user)
-    registration_date = request.user.date_joined.date()
-    registration_date = timezone.make_aware(
-        timezone.datetime.combine(registration_date, timezone.datetime.min.time())
-    )
+    registration_date = request.user.date_joined
     registration_date = timezone.localtime(registration_date)
     context = {
         'user_profile': user_profile,
@@ -115,3 +112,8 @@ def latestposts_view(request):
     latest_posts = paginator.get_page(page_number)
     context = {'latestposts': latest_posts}
     return render(request, 'latestposts.html', context)
+
+def post_view(request, post_id):
+    post = Post.objects.get(id=post_id)
+    context = {'post': post}
+    return render(request, 'post.html', context)

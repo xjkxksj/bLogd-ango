@@ -41,7 +41,8 @@ body {
 .fa-plus,
 .fa-sign-in,
 .fa-square-plus,
-.fa-list-ul {
+.fa-list-ul,
+.fa-circle-question {
     align-self: center;
     padding: 7px;
     color: red;

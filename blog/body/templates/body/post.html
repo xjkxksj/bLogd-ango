@@ -1,0 +1,16 @@
+{% extends 'body/welcome.html' %}
+{% load static %}
+{% block content %}
+    <div class="post-wrapper content-wrapper">
+        <div class="post-image">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Post Image">
+            {% endif %}
+        </div>
+        <div class="post-details">
+            <h1>{{ post.title }}</h1>
+            <p class="author-info">Posted by <em>{{ post.user.userprofile.nickname }}</em></p>
+            <p>{{ post.content }}</p>
+        </div>
+    </div>
+{% endblock %}
