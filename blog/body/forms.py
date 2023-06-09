@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Post
+from .models import Post, Tag
 
 User = get_user_model()
 
@@ -40,17 +40,23 @@ class UserLoginForm(forms.Form):
         user = authenticate(username=username, password=password)
         return user
     
-class NewPostForm(forms.Form):
-    title = forms.CharField(label='Title', max_length=100)
-    content = forms.CharField(label='Content', widget=forms.Textarea)
-    image = forms.ImageField(label='Image', required=False)
+class NewPostForm(forms.ModelForm):
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        widget=forms.CheckboxSelectMultiple
+    )
 
-    def save(self, user=None, commit=True):
-        title = self.cleaned_data['title']
-        content = self.cleaned_data['content']
-        post = Post(title=title, content=content, user=user)
-        
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'image', 'tags']
+
+    def save(self, commit=True):
+        post = super().save(commit=False)
         if commit:
             post.save()
-        
         return post
+
+    def save_m2m(self):
+        post = self.instance
+        tags = self.cleaned_data['tags']
+        post.tags.set(tags)

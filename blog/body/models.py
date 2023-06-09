@@ -7,6 +7,12 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username if self.user else 'No user'
+    
+class Tag(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
     title = models.CharField(max_length=30)
@@ -14,6 +20,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post_added_date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='post_images/', blank=True, null=True)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.title
@@ -39,9 +46,6 @@ class Comment(models.Model):
 class Password(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     password = models.CharField(max_length=30)
-
-class Tag(models.Model):
-    name = models.CharField(max_length=30)
 
 class Post_Tag(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
