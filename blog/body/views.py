@@ -1,4 +1,3 @@
-import os
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -6,10 +5,8 @@ from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, UserLoginForm, NewPostForm
 from .models import UserProfile, Post, Tag
 from django.utils import timezone
-from PIL import Image
-from django.core.files import File
-from django.conf import settings
 from django.core.paginator import Paginator
+from django.utils.text import slugify
 
 def register_view(request):
     if request.method == 'POST':
@@ -72,25 +69,13 @@ def newpost_view(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
-            post.save()
+            post.slug = slugify(post.title)
+
             image_file = request.FILES.get('image')
             if image_file:
-                image = Image.open(image_file)
-                desired_size = (400, 400)
-                image.thumbnail(desired_size)
-                image_filename = image_file.name
-                image_extension = image_filename.split('.')[-1]
-                temp_image_path = os.path.join(settings.MEDIA_ROOT, 'post_images', f'temp_image.{image_extension}')
-                image.save(temp_image_path)
-                with open(temp_image_path, 'rb') as f:
-                    post.image.save(image_filename, File(f), save=True)
+                post.image = image_file
 
-                os.remove(temp_image_path)
-            else:
-                no_image_path = os.path.join(settings.MEDIA_ROOT, 'post_images', 'noimage.jpg')
-                with open(no_image_path, 'rb') as f:
-                    post.image.save('noimage.jpg', File(f), save=True)
-
+            post.save()
             form.save_m2m()
 
             return redirect('latestposts')
@@ -104,11 +89,17 @@ def newpost_view(request):
 def tag_posts_view(request, tag_name):
     tag = Tag.objects.get(name=tag_name)
     posts = tag.post_set.all().order_by('-post_added_date')
+    paginator = Paginator(posts, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'posts': posts,
         'tag': tag.name,
+        'posts': page_obj,
     }
+
     return render(request, 'tag_posts.html', context)
+
 
 def authors_view(request):
     return render(request, 'authors.html')
@@ -124,7 +115,7 @@ def latestposts_view(request):
     context = {'latestposts': latest_posts}
     return render(request, 'latestposts.html', context)
 
-def post_view(request, post_id):
-    post = Post.objects.get(id=post_id)
+def post_view(request, slug):
+    post = Post.objects.get(slug=slug)
     context = {'post': post}
     return render(request, 'post.html', context)

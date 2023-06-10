@@ -1,27 +1,40 @@
 {% extends 'body/welcome.html' %}
 {% load static %}
 {% block content %}
-<div class="latest-posts-wrapper content-wrapper">
-    <h1 class="latest-posts-title">Posts with Tag "{{ tag }}"</h1>
-    <div class="latest-posts-container">
-        {% for post in posts %}
-        <div class="post" onclick="window.location.href='{% url 'post' post_id=post.id %}'">
-            <div class="post-image">
-                {% if post.image %}
-                <img src="{{ post.image.url }}" alt="Post Image">
-                {% endif %}
-            </div>
-            <div class="post-details">
-                <h2>{{ post.title }}</h2>
-                <p class="author-info">Posted by <em>{{ post.user.userprofile.nickname }}</em></p>
-                <div class="tags">
-                    {% for tag in post.tags.all %}
-                        <a href="{% url 'tag_posts' tag_name=tag.name %}">#{{ tag.name }}</a>
-                    {% endfor %}
+    <div class="latest-posts-wrapper content-wrapper">
+        <h1 class="latest-posts-title">Posts with Tag "{{ tag }}"</h1>
+        <div class="latest-posts-container">
+            {% for post in posts %}
+                <div class="post" onclick="window.location.href='{% url 'post' slug=post.slug %}'">
+                    <div class="post-image">
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="Post Image">
+                        {% endif %}
+                    </div>
+                    <div class="post-details">
+                        <h2>{{ post.title }}</h2>
+                        <p class="author-info">Posted by <em>{{ post.user.userprofile.nickname }}</em></p>
+                        <div class="tags">
+                            {% for tag in post.tags.all %}
+                                <a href="{% url 'tag_posts' tag_name=tag.name %}">#{{ tag.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+        <div class="pagination">
+            <a href="{% url 'latestposts' %}" class="arrow-link">&larr;</a>
+            <a href="{% url 'frontpage' %}"><i class="fas fa-home"></i></a>
+            {% if posts.has_previous %}
+                <a href="?page=1"><i class="fas fa-angle-double-left"></i></a>
+                <a href="?page={{ posts.previous_page_number }}"><i class="fas fa-angle-left"></i></a>
+            {% endif %}
+            <span class="current-page">{{ posts.number }}</span>
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}"><i class="fas fa-angle-right"></i></a>
+                <a href="?page={{ posts.paginator.num_pages }}"><i class="fas fa-angle-double-right"></i></a>
+            {% endif %}
+        </div>
     </div>
-</div>
 {% endblock %}

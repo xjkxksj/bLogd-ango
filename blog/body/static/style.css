@@ -227,7 +227,7 @@ form.register-form {
     border-radius: 15px;
     outline: none;
     color: white;
-    letter-spacing: 1px;
+    letter-spacing: 1px; 
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
@@ -288,7 +288,7 @@ form.register-form {
 }
 
 .navbar button {
-    background: #FF0000;
+    background: #FF0000; 
     color: #FFFFFF;
 }
 
@@ -420,7 +420,6 @@ form.register-form {
 }
 
 .account-buttons button i {
-    align-self: center;
     padding: 7px;
     color: white;
 }
@@ -430,6 +429,35 @@ form.register-form {
 }
 
 .account-buttons button:hover i {
+    color: white;
+}
+
+.account-buttons button.nav-button {
+    background: red;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+}
+
+.account-buttons button.nav-button i {
+    padding: 7px;
+    color: white;
+}
+
+.account-buttons button.nav-button:hover {
+    background-color: darkred;
+}
+
+.account-buttons button.nav-button:hover i {
     color: white;
 }
 
@@ -527,8 +555,7 @@ form.register-form {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
   
 .file-upload input[type="file"] {
@@ -651,9 +678,10 @@ form.register-form {
 }
 
 .latest-posts-wrapper {
-    background: linear-gradient(to bottom, white, gray);
+    background: linear-gradient(to bottom, white, lightgray);
     background-repeat: no-repeat;
     background-attachment: fixed;
+    transition: background 0.5s ease;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -676,11 +704,6 @@ form.register-form {
     gap: 20px;
     padding: 0 200px;
     box-sizing: border-box;
-}
-
-.post.middle-post {
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .post {
@@ -726,19 +749,19 @@ form.register-form {
 
 @media screen and (max-width: 800px) {
     .latest-posts-container {
-      padding: 0 20px;
+        padding: 0 20px;
     }
-  
+
     .post {
-      flex-basis: calc(50% - (20px / 2));
+        flex-basis: calc(50% - (20px / 2));
     }
-  }
-  
-  @media screen and (max-width: 500px) {
+}
+
+@media screen and (max-width: 500px) {
     .post {
-      flex-basis: 100%;
+        flex-basis: 100%;
     }
-  }
+}
 
 .post-image {
     flex: 4;
@@ -757,45 +780,93 @@ form.register-form {
     object-fit: cover;
 }
 
-.post-wrapper {
-    padding-top: 100px;
+.post-image-large {
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.post-wrapper .post-image img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
-
-.post-image-post-page img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
-
-.post-wrapper .post-image.post-image-post-page img {
-    width: auto;
+.post-image-large img {
+    width: 100%;
     height: auto;
-    max-width: 50%;
-    max-height: 50%;
-    object-fit: contain;
+    object-fit: cover;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.post-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post-page-wrapper {
+    background: linear-gradient(to bottom, lightskyblue, lightgreen, lightyellow);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: gradientTransition 10s infinite linear;
+}
+
+@keyframes gradientTransition {
+    0% {
+        background-position: 0% 0%, 0% 50%, 0% 100%;
+    }
+    33% {
+        background-position: 0% 100%, 0% 0%, 0% 50%;
+    }
+    66% {
+        background-position: 0% 50%, 0% 100%, 0% 0%;
+    }
+    100% {
+        background-position: 0% 0%, 0% 50%, 0% 100%;
+    }
 }
 
 .post-details {
     flex: 1;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
-.post-details h2 {
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 5px;
+.post-details-post-page {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
-.author-info {
-    font-size: 15px;
-    color: grey;
-    font-style: italic;
+.post-details .post-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.post-details-post-page h1,
+.post-details-post-page .author-info,
+.post-details-post-page .post-content {
+    margin: 0;
+}
+
+.post-details-post-page .author-info,
+.post-details-post-page .post-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pagination {
@@ -803,38 +874,37 @@ form.register-form {
     margin-top: 20px;
 }
 
-.pagination-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-    margin-top: auto;
-}
-  
 .pagination a {
     margin: 0 5px;
     color: black;
     text-decoration: none;
 }
-  
+
+.arrow-link {
+    font-weight: bold;
+}  
+
+.home-link {
+    margin-right: 5px;
+    color: black;
+    text-decoration: none;
+}
+
+.home-link:hover {
+    text-decoration: underline;
+}
+
 .current-page {
     font-weight: bold;
     margin: 0 5px;
 }
 
-.next-page-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #555;
-    color: #fff;
-    text-decoration: none;
+.tags-container {
+    margin-top: -40px;
 }
 
-.custom-select {
-    width: 25%;
-    height: 100px;
-}  
-
-.tags-container {
-    margin-top: -20px;
+.tags-container select {
+    height: 130px;
+    width: 150px;
+    text-align: center;
 }

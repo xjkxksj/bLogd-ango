@@ -27,7 +27,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('newpost/', newpost_view, name='newpost'),
     path('latestposts/', latestposts_view, name='latestposts'),
-    path('post/<int:post_id>/', post_view, name='post'),
+    path('post/<slug:slug>/', post_view, name='post'),
     path('tag/<str:tag_name>/', tag_posts_view, name='tag_posts'),
 ]
 if settings.DEBUG:

@@ -5,7 +5,7 @@
         <h1 class="latest-posts-title">Latest Posts</h1>
         <div class="latest-posts-container">
             {% for post in latestposts %}
-                <div class="post" onclick="window.location.href='{% url 'post' post_id=post.id %}'">
+                <div class="post" onclick="window.location.href='{% url 'post' slug=post.slug %}'">
                     <div class="post-image">
                         {% if post.image %}
                             <img src="{{ post.image.url }}" alt="Post Image">
@@ -24,6 +24,7 @@
             {% endfor %}
         </div>
         <div class="pagination">
+            <a href="{% url 'frontpage' %}" class="home-link"><i class="fas fa-home"></i></a>
             {% if latestposts.has_previous %}
                 <a href="?page=1"><i class="fas fa-angle-double-left"></i></a>
                 <a href="?page={{ latestposts.previous_page_number }}"><i class="fas fa-angle-left"></i></a>
