@@ -908,3 +908,20 @@ form.register-form {
     width: 150px;
     text-align: center;
 }
+.add-comment-section {
+    width: 60%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.add-comment-section form {
+    display: inline-block;
+    text-align: left;
+}
+
+.add-comment-section textarea {
+    width: 100%;
+    height: 100px;
+    resize: vertical;
+    margin-bottom: 10px;
+}

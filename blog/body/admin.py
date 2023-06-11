@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, models, Tag
+from .models import Post, models, Tag, Comment
 from django import forms
 
 class PostAdminForm(forms.ModelForm):

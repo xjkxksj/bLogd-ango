@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Post, Tag
+from .models import Post, Tag, Comment
 
 User = get_user_model()
 
@@ -60,3 +60,10 @@ class NewPostForm(forms.ModelForm):
         post = self.instance
         tags = self.cleaned_data['tags']
         post.tags.set(tags)
+
+class CommentForm(forms.ModelForm):
+    content = forms.CharField(widget=forms.Textarea)
+
+    class Meta:
+        model = Comment
+        fields = ('content',)

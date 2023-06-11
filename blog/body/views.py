@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from .forms import UserRegistrationForm, UserLoginForm, NewPostForm
-from .models import UserProfile, Post, Tag
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import UserRegistrationForm, UserLoginForm, NewPostForm, CommentForm
+from .models import UserProfile, Post, Tag, Comment
+from django.urls import reverse
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.utils.text import slugify
@@ -100,7 +101,6 @@ def tag_posts_view(request, tag_name):
 
     return render(request, 'tag_posts.html', context)
 
-
 def authors_view(request):
     return render(request, 'authors.html')
 
@@ -116,6 +116,42 @@ def latestposts_view(request):
     return render(request, 'latestposts.html', context)
 
 def post_view(request, slug):
-    post = Post.objects.get(slug=slug)
+    post = get_object_or_404(Post, slug=slug)
+
+    if request.method == 'POST' and request.user.is_authenticated:
+        content = request.POST.get('content')
+        nickname = request.user.userprofile.nickname
+        comment = Comment(post=post, content=content, nickname=nickname)
+        comment.save()
+
     context = {'post': post}
     return render(request, 'post.html', context)
+
+@login_required
+def add_comment(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return redirect('latestposts')
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            
+            # Dodaj logikę dodawania komentarza
+            comment = Comment(post=post, user=request.user, nickname=request.user.userprofile.nickname, content=content)
+            comment.save()
+            
+            # Sprawdź, czy komentarz został pomyślnie dodany
+            if comment.id:
+                # Przekieruj na tę samą stronę postu
+                return redirect('post', slug=post.slug)
+        
+        # Jeśli formularz jest nieprawidłowy, przekazujemy go do kontekstu
+        # razem z postem i wyświetlimy komunikat o błędzie
+        return render(request, 'body/post.html', {'post': post, 'form': form})
+    
+    # Jeśli żądanie nie jest POST, przekieruj na stronę postu
+    form = CommentForm()
+    return redirect('post', slug=post.slug)

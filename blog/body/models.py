@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 from django.utils.text import slugify
 
 class UserProfile(models.Model):
@@ -46,8 +47,12 @@ class Image(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    nickname = models.CharField(max_length=30, blank=True, null=True)
     content = models.CharField(max_length=500)
-    post_added_date = models.DateTimeField(auto_now_add=True)
+    comment_added_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Comment by {self.user.username} on {self.post.title}"
 
 class Password(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
