@@ -796,12 +796,12 @@ form.register-form {
     border-radius: 10px;
 }
 
-.post-wrapper {
+.post-page-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
 }
 
 .post-page-wrapper {
@@ -835,7 +835,7 @@ form.register-form {
     padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
 }
@@ -908,6 +908,7 @@ form.register-form {
     width: 150px;
     text-align: center;
 }
+
 .add-comment-section {
     width: 60%;
     margin: 20px auto;
@@ -915,13 +916,55 @@ form.register-form {
 }
 
 .add-comment-section form {
-    display: inline-block;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .add-comment-section textarea {
-    width: 100%;
+    width: 30%;
     height: 100px;
-    resize: vertical;
+    resize: both;
     margin-bottom: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.add-comment-section button {
+    align-self: center;
+}
+
+.comments-section {
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.comments-heading,
+.no-comments {
+    text-align: center;
+}
+
+.no-comments {
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.comment {
+    background-color: ivory;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px 0;
+    max-width: 100%;
+}
+  
+.comment .comment-content {
+    margin-bottom: 5px;
+}
+  
+.comment .comment-info {
+    font-size: 12px;
+    color: lightblue;
 }

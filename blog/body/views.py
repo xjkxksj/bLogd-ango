@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserRegistrationForm, UserLoginForm, NewPostForm, CommentForm
 from .models import UserProfile, Post, Tag, Comment
@@ -42,7 +42,10 @@ def login_view(request):
 
 @login_required
 def account_view(request):
-    user_profile = UserProfile.objects.get(user=request.user)
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile(user=request.user, nickname="ADMIN")
     registration_date = request.user.date_joined
     registration_date = timezone.localtime(registration_date)
     context = {
@@ -115,16 +118,30 @@ def latestposts_view(request):
     context = {'latestposts': latest_posts}
     return render(request, 'latestposts.html', context)
 
+def login_required_for_comment(user):
+    return user.is_authenticated
+
+@user_passes_test(login_required_for_comment, login_url='/login/')
 def post_view(request, slug):
     post = get_object_or_404(Post, slug=slug)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.user = request.user
+            comment.nickname = request.user.userprofile.nickname
+            comment.save()
+            return redirect('post', slug=slug)
+    else:
+        form = CommentForm()
 
-    if request.method == 'POST' and request.user.is_authenticated:
-        content = request.POST.get('content')
-        nickname = request.user.userprofile.nickname
-        comment = Comment(post=post, content=content, nickname=nickname)
-        comment.save()
-
-    context = {'post': post}
+    comments = Comment.objects.filter(post=post).order_by('-comment_added_date')
+    context = {
+        'post': post,
+        'form': form,
+        'comments': comments,
+    }
     return render(request, 'post.html', context)
 
 @login_required
@@ -138,20 +155,14 @@ def add_comment(request, post_id):
         form = CommentForm(request.POST)
         if form.is_valid():
             content = form.cleaned_data['content']
-            
-            # Dodaj logikę dodawania komentarza
             comment = Comment(post=post, user=request.user, nickname=request.user.userprofile.nickname, content=content)
             comment.save()
-            
-            # Sprawdź, czy komentarz został pomyślnie dodany
+
             if comment.id:
-                # Przekieruj na tę samą stronę postu
                 return redirect('post', slug=post.slug)
-        
-        # Jeśli formularz jest nieprawidłowy, przekazujemy go do kontekstu
-        # razem z postem i wyświetlimy komunikat o błędzie
+
         return render(request, 'body/post.html', {'post': post, 'form': form})
-    
-    # Jeśli żądanie nie jest POST, przekieruj na stronę postu
+
     form = CommentForm()
     return redirect('post', slug=post.slug)
+

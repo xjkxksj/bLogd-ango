@@ -1,6 +1,5 @@
 {% extends 'body/welcome.html' %}
 {% load static %}
-
 {% block content %}
     <div class="post-page-wrapper">
         <div class="post-wrapper content-wrapper">
@@ -16,30 +15,33 @@
                     <p>{{ post.content }}</p>
                 </div>
             </div>
-        </div>
-        <div class="comments-section">
-            <h2>Comments</h2>
-            {% for comment in post.comments.all|slice:"0:None:-1" %}
-                <div class="comment">
-                    <p class="comment-content">{{ comment.content }}</p>
-                    <p class="comment-info">Posted by <em>{{ comment.nickname }}</em> on {{ comment.comment_added_date }}</p>
+            {% if user.is_authenticated %}
+                <div class="add-comment-section">
+                    <h2>Add a Comment</h2>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <textarea name="content" placeholder="Your comment"></textarea>
+                        <button type="submit">Submit</button>
+                    </form>
                 </div>
-            {% empty %}
-                <p>No comments yet.</p>
-            {% endfor %}
-        </div>
-        
-        {% if user.is_authenticated %}
-            <div class="add-comment-section">
-                <h2>Add a Comment</h2>
-                <form method="post" action="">
-                    {% csrf_token %}
-                    <textarea name="content" placeholder="Your comment"></textarea>
-                    <button type="submit">Submit</button>
-                </form>
+            {% else %}
+                <p>Login to add a comment.</p>
+            {% endif %}
+            <div class="comments-section">
+                <h2 class="comments-heading">Comments</h2>
+                {% for comment in post.comments.all %}
+                    <div class="comment">
+                        <p class="comment-content">{{ comment.content }}</p>
+                        <p class="comment-info">Posted by <em>{{ comment.user.userprofile.nickname }}</em> on {{ comment.comment_added_date }}</p>
+                    </div>
+                {% empty %}
+                    <p>No comments yet.</p>
+                {% endfor %}
             </div>
-        {% else %}
-            <p>Login to add a comment.</p>
-        {% endif %}
+        </div>
+        <div class="pagination">
+            <a href="{% url 'latestposts' %}"><i class="fas fa-angle-left"></i></a>
+            <a href="{% url 'frontpage' %}" class="home-link"><i class="fas fa-home"></i></a>
+        </div>        
     </div>
 {% endblock %}

@@ -28,8 +28,8 @@
             {% endfor %}
         </div>
         <div class="pagination">
-            <a href="{% url 'latestposts' %}" class="arrow-link">&larr;</a>
-            <a href="{% url 'frontpage' %}"><i class="fas fa-home"></i></a>
+            <a href="{% url 'latestposts' %}"><i class="fas fa-angle-left"></i></a>
+            <a href="{% url 'frontpage' %}" class="home-link"><i class="fas fa-home"></i></a>
             {% if posts.has_previous %}
                 <a href="?page=1"><i class="fas fa-angle-double-left"></i></a>
                 <a href="?page={{ posts.previous_page_number }}"><i class="fas fa-angle-left"></i></a>

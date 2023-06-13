@@ -45,11 +45,14 @@ class Image(models.Model):
     type = models.CharField(max_length=10, choices=EXTENSION_SELECTION)
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=30, blank=True, null=True)
     content = models.CharField(max_length=500)
     comment_added_date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-comment_added_date']
 
     def __str__(self):
         return f"Comment by {self.user.username} on {self.post.title}"
