@@ -32,7 +32,7 @@
                 {% for comment in post.comments.all %}
                     <div class="comment">
                         <p class="comment-content">{{ comment.content }}</p>
-                        <p class="comment-info">Posted by <em>{{ comment.user.userprofile.nickname }}</em> on {{ comment.comment_added_date }}</p>
+                        <p class="comment-info">Posted by <em>{{ comment.user.userprofile.nickname|default:"ADMIN" }}</em> on {{ comment.comment_added_date }}</p>
                     </div>
                 {% empty %}
                     <p>No comments yet.</p>
