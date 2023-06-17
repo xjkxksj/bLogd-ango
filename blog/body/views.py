@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.utils.text import slugify
+from django.http import HttpResponseForbidden
 
 def register_view(request):
     if request.method == 'POST':
@@ -121,16 +122,65 @@ def latestposts_view(request):
 def login_required_for_comment(user):
     return user.is_authenticated
 
-@user_passes_test(login_required_for_comment, login_url='/login/')
 def post_view(request, slug):
     post = get_object_or_404(Post, slug=slug)
+    is_public = True
+
+    if post.privacy == 'private':
+        if not request.user.is_authenticated:
+            return redirect('login')
+        is_public = False
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
             comment.user = request.user
-            comment.nickname = request.user.userprofile.nickname
+            if hasattr(request.user, 'userprofile'):
+                comment.nickname = request.user.userprofile.nickname
+            else:
+                comment.nickname = 'ADMIN'
+            comment.save()
+            return redirect('post', slug=slug)
+    else:
+        form = CommentForm()
+
+    comments = Comment.objects.filter(post=post).order_by('-comment_added_date')
+    context = {
+        'post': post,
+        'form': form,
+        'comments': comments,
+        'is_public': is_public,
+    }
+    return render(request, 'post.html', context)
+
+@user_passes_test(lambda u: u.is_authenticated)
+def private_post_view(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+
+    if post.privacy == 'private':
+        if request.user != post.user:
+            return HttpResponseForbidden("You don't have permission to access this page.")
+    else:
+        return redirect('post', slug=slug)
+
+    return render(request, 'post.html', {'post': post, 'is_public': False})
+
+@login_required
+def add_comment(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.user = request.user
+            if hasattr(request.user, 'userprofile'):
+                comment.nickname = request.user.userprofile.nickname
+            else:
+                comment.nickname = 'ADMIN'
             comment.save()
             return redirect('post', slug=slug)
     else:
@@ -143,26 +193,4 @@ def post_view(request, slug):
         'comments': comments,
     }
     return render(request, 'post.html', context)
-
-@login_required
-def add_comment(request, post_id):
-    try:
-        post = Post.objects.get(id=post_id)
-    except Post.DoesNotExist:
-        return redirect('latestposts')
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            content = form.cleaned_data['content']
-            comment = Comment(post=post, user=request.user, nickname=request.user.userprofile.nickname, content=content)
-            comment.save()
-
-            if comment.id:
-                return redirect('post', slug=post.slug)
-
-        return render(request, 'body/post.html', {'post': post, 'form': form})
-
-    form = CommentForm()
-    return redirect('post', slug=post.slug)
 

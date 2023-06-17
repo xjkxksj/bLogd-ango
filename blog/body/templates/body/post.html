@@ -10,17 +10,25 @@
             </div>
             <div class="post-details">
                 <h1>{{ post.title }}</h1>
-                <p class="author-info">Posted by <em>{{ post.user.userprofile.nickname }}</em></p>
+                {% if post.user.is_superuser %}
+                    <p class="author-info">Posted by <em>ADMIN</em></p>
+                {% else %}
+                    <p class="author-info">Posted by <em>{{ post.user.userprofile.nickname }}</em></p>
+                {% endif %}
+                {% if is_public %}
                 <div class="post-content">
                     <p>{{ post.content }}</p>
                 </div>
+                {% else %}
+                    <p>This is a private post. Please login to view the content.</p>
+                {% endif %}
             </div>
             {% if user.is_authenticated %}
                 <div class="add-comment-section">
                     <h2>Add a Comment</h2>
                     <form method="post" action="">
                         {% csrf_token %}
-                        <textarea name="content" placeholder="Your comment"></textarea>
+                        <textarea name="content" class="{% if not post.image %}no-image{% endif %}" placeholder="Your comment"></textarea>
                         <button type="submit">Submit</button>
                     </form>
                 </div>

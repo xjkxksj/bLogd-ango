@@ -11,6 +11,7 @@ from body.views import (
     newpost_view,
     latestposts_view,
     post_view,
+    private_post_view,
     tag_posts_view
 )
 from django.conf import settings
@@ -28,6 +29,7 @@ urlpatterns = [
     path('newpost/', newpost_view, name='newpost'),
     path('latestposts/', latestposts_view, name='latestposts'),
     path('post/<slug:slug>/', post_view, name='post'),
+    path('post/private/<slug:slug>/', private_post_view, name='private_post'),
     path('tag/<str:tag_name>/', tag_posts_view, name='tag_posts'),
 ]
 if settings.DEBUG:

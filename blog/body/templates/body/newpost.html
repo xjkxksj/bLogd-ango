@@ -40,6 +40,19 @@
                         {% endfor %}
                     </select>
                 </div>
+                <div class="form-group post-privacy">
+                    <label for="privacy">Post Privacy:</label>
+                    <div class="radio-container">
+                        <label class="radio-label">
+                            <input type="radio" id="public" name="privacy" value="public" checked>
+                            <span>Public</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" id="private" name="privacy" value="private">
+                            <span>Private</span>
+                        </label>
+                    </div>
+                </div>                                            
                 <div class="button-container">
                     <button onclick="location.href='/'" type="button" class="home-button">
                         <i class="fa-solid fa-house" style="color: white;"></i>
