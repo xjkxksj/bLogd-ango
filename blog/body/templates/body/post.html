@@ -15,23 +15,25 @@
                 {% else %}
                     <p class="author-info">Posted by <em>{{ post.user.userprofile.nickname }}</em></p>
                 {% endif %}
-                {% if is_public %}
-                <div class="post-content">
-                    <p>{{ post.content }}</p>
-                </div>
+                {% if post.privacy == 'public' or user.is_authenticated %}
+                    <div class="post-content">
+                        <p>{{ post.content }}</p>
+                    </div>
                 {% else %}
                     <p>This is a private post. Please login to view the content.</p>
                 {% endif %}
             </div>
             {% if user.is_authenticated %}
-                <div class="add-comment-section">
-                    <h2>Add a Comment</h2>
-                    <form method="post" action="">
-                        {% csrf_token %}
-                        <textarea name="content" class="{% if not post.image %}no-image{% endif %}" placeholder="Your comment"></textarea>
-                        <button type="submit">Submit</button>
-                    </form>
-                </div>
+                {% if post.privacy == 'public' or post.privacy == 'private' %}
+                    <div class="add-comment-section">
+                        <h2>Add a Comment</h2>
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <textarea name="content" class="{% if not post.image %}no-image{% endif %}" placeholder="Your comment"></textarea>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                {% endif %}
             {% else %}
                 <p>Login to add a comment.</p>
             {% endif %}
@@ -40,7 +42,7 @@
                 {% for comment in post.comments.all %}
                     <div class="comment">
                         <p class="comment-content">{{ comment.content }}</p>
-                        <p class="comment-info">Posted by <em>{{ comment.user.userprofile.nickname|default:"ADMIN" }}</em> on {{ comment.comment_added_date }}</p>
+                        <p class="comment-info">Posted by <em>{{ comment.nickname|default:"ADMIN" }}</em> on {{ comment.comment_added_date }}</p>
                     </div>
                 {% empty %}
                     <p>No comments yet.</p>

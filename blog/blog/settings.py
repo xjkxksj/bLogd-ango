@@ -162,5 +162,4 @@ PBKDF2_SALT_LENGTH = 12
 # PBKDF2 hash length
 PBKDF2_HASH_LENGTH = 24
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+LOGIN_URL = '/login/'

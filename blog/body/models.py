@@ -37,18 +37,6 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-class Image(models.Model):
-    EXTENSION_SELECTION = [
-        ("j", ".jpg"),
-        ("je", ".jpeg"),
-        ("p", ".png"),
-        ("b", ".bmp"),
-        ("g", ".gif"),
-    ]
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
-    name = models.CharField(max_length=30)
-    type = models.CharField(max_length=10, choices=EXTENSION_SELECTION)
-
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -61,7 +49,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.user.username} on {self.post.title}"
-
-class Password(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    password = models.CharField(max_length=30)

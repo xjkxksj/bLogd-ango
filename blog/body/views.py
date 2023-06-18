@@ -80,6 +80,8 @@ def newpost_view(request):
             if image_file:
                 post.image = image_file
 
+            privacy_field = request.POST.get('privacy')
+            post.privacy = privacy_field
             post.save()
             form.save_m2m()
 
@@ -89,7 +91,13 @@ def newpost_view(request):
 
     tags = Tag.objects.all()
 
-    return render(request, 'newpost.html', {'form': form, 'tags': tags})
+    is_public = True
+    if request.method == 'GET' and 'privacy' in request.GET:
+        privacy_field = request.GET.get('privacy')
+        if privacy_field == 'Private':
+            is_public = False
+
+    return render(request, 'newpost.html', {'form': form, 'tags': tags, 'is_public': is_public})
 
 def tag_posts_view(request, tag_name):
     tag = Tag.objects.get(name=tag_name)
@@ -124,12 +132,10 @@ def login_required_for_comment(user):
 
 def post_view(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    is_public = True
+    is_public = post.privacy == 'public'
 
-    if post.privacy == 'private':
-        if not request.user.is_authenticated:
-            return redirect('login')
-        is_public = False
+    if not is_public and not request.user.is_authenticated:
+        return redirect('login')
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -155,7 +161,7 @@ def post_view(request, slug):
     }
     return render(request, 'post.html', context)
 
-@user_passes_test(lambda u: u.is_authenticated)
+@login_required
 def private_post_view(request, slug):
     post = get_object_or_404(Post, slug=slug)
 
