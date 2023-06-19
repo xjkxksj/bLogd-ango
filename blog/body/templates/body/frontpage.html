@@ -1,55 +1,83 @@
 {% extends 'body/welcome.html' %}
 {% load static %}
 {% block content %}
-    <div class="navbar">
-        <div class="logo">
-            <img src="{% static 'PenSpotLogo.png' %}" alt="Logo">
-        </div>
-        <div class="navigation">
+    <div class="frontpage-wrapper">
+        <div class="navbar">
+            <div class="logo">
+                <img src="{% static 'PenSpotLogo.png' %}" alt="Logo">
+            </div>
+            <div class="navigation">
+                <div class="account-buttons">
+                    <button class="nav-button" onclick="location.href='latestposts/'">
+                        <i class="fa-solid fa-list-ul"></i>
+                    </button>
+                    {% if is_user_logged_in %}
+                        <button class="nav-button" onclick="location.href='newpost/'">
+                            <i class="fa-solid fa-square-plus"></i>
+                        </button>
+                    {% endif %}
+                    <button class="nav-button" onclick="location.reload()">
+                        <i class="fa-solid fa-shuffle"></i>
+                    </button>
+                    <button class="nav-button" onclick="location.href='authors/'">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="search-container">
+                <form class="search-form" action="{% url 'search' %}" method="GET">
+                    <input type="text" name="query" placeholder="Search by nickname or tags without '#'">
+                    <button type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
             <div class="account-buttons">
-                <button class="nav-button" onclick="location.href='#'">Przycisk 2</button>
-                <button class="nav-button" onclick="location.href='#'">Przycisk 3</button>
-                <button class="nav-button" onclick="location.href='latestposts/'">
-                    <i class="fa-solid fa-list-ul"></i>
-                </button>
-                {% if user.is_authenticated %}
-                    <button class="nav-button" onclick="location.href='newpost/'">
-                        <i class="fa-solid fa-square-plus"></i>
+                {% if is_user_logged_in %}
+                    <button onclick="location.href='account/'">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
+                    <form id="logout-form" method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button id="logout-button" onclick="logoutUser()">
+                            <i class="fa-solid fa-power-off"></i>
+                        </button>
+                    </form>
+                {% else %}
+                    <button onclick="location.href='login/'">
+                        <i class="fa-solid fa-sign-in"></i>
                     </button>
                 {% endif %}
-                <button class="nav-button" onclick="location.href='authors/'">
-                    <i class="fa-solid fa-circle-question"></i>
+                <button onclick="location.href='admin/'">
+                    <i class="fa-solid fa-user-secret"></i>
                 </button>
             </div>
         </div>
-        <div class="search-container">
-            <form class="search-form" action="{% url 'search' %}" method="GET">
-                <input type="text" name="query" placeholder="Search by nickname or tags without '#'">
-                <button type="submit">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </form>
-        </div>
-        <div class="account-buttons">
-            {% if user.is_authenticated %}
-                <button onclick="location.href='account/'">
-                    <i class="fa-solid fa-user"></i>
-                </button>
-                <form id="logout-form" method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button id="logout-button" onclick="logoutUser()">
-                        <i class="fa-solid fa-power-off"></i>
-                    </button>
-                </form>
-            {% else %}
-                <button onclick="location.href='login/'">
-                    <i class="fa-solid fa-sign-in"></i>
-                </button>
-            {% endif %}
-            <button onclick="location.href='admin/'">
-                <i class="fa-solid fa-user-secret"></i>
-            </button>
+        <script src="{% static 'logout.js' %}"></script>
+        <div class="random-post-wrapper">
+            <div class="random-post">
+                <h3>Here's an example post on our website</h3>
+                {% if random_post %}
+                    {% if random_post.image %}
+                        <div class="post-image post-image-large">
+                            <img src="{{ random_post.image.url }}" alt="Post Image">
+                        </div>
+                    {% endif %}
+                    <div class="post-details post-details-post-page">
+                        <h2>{{ random_post.title }}</h2>
+                        <p>Posted by {% if random_post.user.is_superuser %}<em>ADMIN</em>{% else %}<em>{{ random_post.user.userprofile.nickname }}</em>{% endif %}</p>
+                        {% if random_post.privacy == 'public' or is_user_logged_in %}
+                            <div class="post-content">
+                                <p>{{ random_post.content }}</p>
+                            </div>
+                        {% else %}
+                            <p>This is a private publication. Please log in to see the content.</p>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p>No available publications.</p>
+                {% endif %}
+            </div>
         </div>
     </div>
-    <script src="{% static 'logout.js' %}"></script>
 {% endblock %}

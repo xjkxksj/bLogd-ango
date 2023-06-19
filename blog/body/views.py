@@ -7,10 +7,8 @@ from .models import UserProfile, Post, Tag, Comment
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.utils.text import slugify
-from django.http import HttpResponseForbidden, JsonResponse
+from django.http import HttpResponseForbidden
 from django.db.models import Q 
-import random
-from django.views.decorators.http import require_GET
 
 def register_view(request):
     if request.method == 'POST':
@@ -64,8 +62,31 @@ def logout_view(request):
 
 def frontpage_view(request):
     is_user_logged_in = request.user.is_authenticated
+    random_post = None
+
+    if is_user_logged_in:
+        last_post_id = request.session.get('last_post_id')
+        posts_query = Post.objects.filter(Q(privacy='private') | Q(privacy='public'), image__isnull=False)
+        if last_post_id:
+            posts_query = posts_query.exclude(id=last_post_id)
+
+        random_post = posts_query.order_by('?').first()
+    else:
+        last_post_id = request.session.get('last_post_id')
+        posts_query = Post.objects.filter(privacy='public', image__isnull=False)
+        if last_post_id:
+            posts_query = posts_query.exclude(id=last_post_id)
+
+        random_post = posts_query.order_by('?').first()
+
+    if random_post:
+        request.session['last_post_id'] = random_post.id
+    else:
+        request.session['last_post_id'] = None
+
     context = {
         'is_user_logged_in': is_user_logged_in,
+        'random_post': random_post,
     }
     return render(request, 'frontpage.html', context)
 
@@ -122,7 +143,7 @@ def favourites_view(request):
     return render(request, 'favourites.html')
 
 def latestposts_view(request):
-    all_posts = Post.objects.filter(Q(privacy='public') | Q(privacy='private', user=request.user.id)).order_by('-post_added_date')
+    all_posts = Post.objects.filter(Q(privacy='public') | Q(privacy='private')).order_by('-post_added_date')
     paginator = Paginator(all_posts, 9)
     page_number = request.GET.get('page')
     latest_posts = paginator.get_page(page_number)
@@ -235,6 +256,14 @@ def search_view(request):
         posts = Post.objects.filter(condition, privacy='public').distinct()
 
         if request.user.is_authenticated:
+            is_admin_search = 'ADMIN' in query.upper()
+            if is_admin_search:
+                admin_posts = Post.objects.filter(
+                    condition,
+                    user__is_superuser=True
+                ).distinct()
+                posts = posts | admin_posts
+
             private_posts = Post.objects.filter(
                 condition,
                 Q(user=request.user, privacy='private') | nickname_conditions

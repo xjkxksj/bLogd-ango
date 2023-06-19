@@ -41,6 +41,7 @@ body {
 .fa-plus,
 .fa-sign-in,
 .fa-square-plus,
+.fa-shuffle,
 .fa-list-ul,
 .fa-circle-question {
     align-self: center;
@@ -139,8 +140,7 @@ form.register-form {
 }
 
 .login-form,
-.register-form,
-.create-post-form {
+.register-form {
     background: white;
     width: 300px;
     height: auto;
@@ -157,10 +157,16 @@ form.register-form {
 }
 
 .create-post-form {
-    width: 800px;
-    height: 920px;
+    background: white;
+    width: 700px;
+    height: 800px;
     overflow: auto;
     border-radius: 15px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
 }
 
 .login-form input,
@@ -506,8 +512,9 @@ form.register-form {
     box-sizing: border-box;
 }
 
-.input-container {
-    width: 100%;
+.input-container,
+.textarea-container {
+    width: 80%;
 }
 
 #title {
@@ -627,7 +634,7 @@ form.register-form {
 
 .logo img {
     height: 80px;
-    width: 100px;
+    width: 80px;
 }
 
 .background-image {
@@ -995,3 +1002,39 @@ textarea.no-image {
 .radio-label input[type="radio"] {
     margin-right: 5px;
 }
+
+.random-post-wrapper {
+    margin-top: 100px;
+}
+
+.frontpage-wrapper {
+    background: linear-gradient(to bottom, gray, white, beige);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: gradientTransition 10s infinite linear;
+}
+
+@keyframes gradientTransition {
+    0% {
+        background-position: 0% 0%, 0% 50%, 0% 100%;
+    }
+    33% {
+        background-position: 0% 100%, 0% 0%, 0% 50%;
+    }
+    66% {
+        background-position: 0% 50%, 0% 100%, 0% 0%;
+    }
+    100% {
+        background-position: 0% 0%, 0% 50%, 0% 100%;
+    }
+}
+
+.random-post-wrapper .random-post h3 {
+    text-align: center;
+    font-size: 24px;
+}
+  
