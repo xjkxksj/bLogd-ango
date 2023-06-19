@@ -1,7 +1,6 @@
 {% extends 'body/welcome.html' %}
 {% load static %}
 {% block content %}
-    <script src="{% static 'logout.js' %}"></script>
     <div class="navbar">
         <div class="logo">
             <img src="{% static 'PenSpotLogo.png' %}" alt="Logo">
@@ -24,8 +23,8 @@
             </div>
         </div>
         <div class="search-container">
-            <form class="search-form">
-                <input type="text" placeholder="Search what you need">
+            <form class="search-form" action="{% url 'search' %}" method="GET">
+                <input type="text" name="query" placeholder="Search by nickname or tags without '#'">
                 <button type="submit">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
@@ -52,4 +51,5 @@
             </button>
         </div>
     </div>
+    <script src="{% static 'logout.js' %}"></script>
 {% endblock %}

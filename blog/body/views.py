@@ -1,14 +1,16 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserRegistrationForm, UserLoginForm, NewPostForm, CommentForm
 from .models import UserProfile, Post, Tag, Comment
-from django.urls import reverse
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.utils.text import slugify
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
+from django.db.models import Q 
+import random
+from django.views.decorators.http import require_GET
 
 def register_view(request):
     if request.method == 'POST':
@@ -120,11 +122,17 @@ def favourites_view(request):
     return render(request, 'favourites.html')
 
 def latestposts_view(request):
-    all_posts = Post.objects.order_by('-post_added_date')
+    all_posts = Post.objects.filter(Q(privacy='public') | Q(privacy='private', user=request.user.id)).order_by('-post_added_date')
     paginator = Paginator(all_posts, 9)
     page_number = request.GET.get('page')
     latest_posts = paginator.get_page(page_number)
-    context = {'latestposts': latest_posts}
+
+    is_user_logged_in = request.user.is_authenticated
+
+    context = {
+        'latestposts': latest_posts,
+        'is_user_logged_in': is_user_logged_in,
+    }
     return render(request, 'latestposts.html', context)
 
 def login_required_for_comment(user):
@@ -200,3 +208,50 @@ def add_comment(request, slug):
     }
     return render(request, 'post.html', context)
 
+def search_view(request):
+    query = request.GET.get('query')
+    if query:
+        tags = query.split()
+        nicknames = query.split()
+        title_condition = Q(title__icontains=query)
+        content_condition = Q(content__icontains=query)
+        nickname_condition = Q(user__userprofile__nickname__icontains=query)
+        tag_conditions = Q()
+        for tag in tags:
+            tag_conditions |= Q(tags__name__iexact=tag)
+
+        nickname_conditions = Q()
+        for nickname in nicknames:
+            nickname_conditions |= Q(user__userprofile__nickname__iexact=nickname)
+
+        condition = (
+            title_condition |
+            content_condition |
+            nickname_condition |
+            tag_conditions |
+            nickname_conditions
+        )
+
+        posts = Post.objects.filter(condition, privacy='public').distinct()
+
+        if request.user.is_authenticated:
+            private_posts = Post.objects.filter(
+                condition,
+                Q(user=request.user, privacy='private') | nickname_conditions
+            ).distinct()
+
+            posts = posts | private_posts
+
+        posts = posts.order_by('-post_added_date')
+
+        paginator = Paginator(posts, 9)
+        page_number = request.GET.get('page')
+        paginated_posts = paginator.get_page(page_number)
+
+        context = {
+            'query': query,
+            'posts': paginated_posts,
+        }
+        return render(request, 'search.html', context)
+    else:
+        return render(request, 'search.html')

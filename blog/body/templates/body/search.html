@@ -1,0 +1,49 @@
+{% extends 'body/welcome.html' %}
+{% load static %}
+{% block content %}
+    <div class="latest-posts-wrapper content-wrapper">
+        <h1 class="latest-posts-title">Search Results</h1>
+        <div class="latest-posts-container">
+            {% if posts %}
+                {% for post in posts %}
+                    <div class="post" onclick="window.location.href='{% url 'post' slug=post.slug %}'">
+                        <div class="post-image">
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" alt="Post Image">
+                            {% else %}
+                                <img src="{% static 'noimage.jpg' %}" alt="No Image">
+                            {% endif %}
+                        </div>
+                        <div class="post-details">
+                            <h2>{{ post.title }}</h2>
+                            {% if post.user.is_superuser %}
+                                <p class="author-info">Posted by <em>ADMIN</em></p>
+                            {% else %}
+                                <p class="author-info">Posted by <em>{{ post.user.userprofile.nickname }}</em></p>
+                            {% endif %}
+                            <p class="tags">Tags:
+                                {% for tag in post.tags.all %}
+                                    <a href="{% url 'tag_posts' tag_name=tag.name %}">#{{ tag.name }}</a>
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No search results found.</p>
+            {% endif %}
+        </div>
+        <div class="pagination">
+            <a href="{% url 'frontpage' %}" class="home-link"><i class="fas fa-home"></i></a>
+            {% if posts.has_previous %}
+                <a href="?query={{ query }}&page=1"><i class="fas fa-angle-double-left"></i></a>
+                <a href="?query={{ query }}&page={{ posts.previous_page_number }}"><i class="fas fa-angle-left"></i></a>
+            {% endif %}
+            <span class="current-page">{{ posts.number }}</span>
+            {% if posts.has_next %}
+                <a href="?query={{ query }}&page={{ posts.next_page_number }}"><i class="fas fa-angle-right"></i></a>
+                <a href="?query={{ query }}&page={{ posts.paginator.num_pages }}"><i class="fas fa-angle-double-right"></i></a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

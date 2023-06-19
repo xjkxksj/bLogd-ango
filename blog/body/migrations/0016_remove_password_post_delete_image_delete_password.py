@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('body', '0015_alter_comment_content_alter_post_title_and_more'),
+        ('body', '0014_alter_comment_content_alter_post_title_and_more'),
     ]
 
     operations = [

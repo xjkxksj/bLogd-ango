@@ -12,7 +12,8 @@ from body.views import (
     latestposts_view,
     post_view,
     private_post_view,
-    tag_posts_view
+    tag_posts_view,
+    search_view,
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -31,6 +32,7 @@ urlpatterns = [
     path('post/<slug:slug>/', post_view, name='post'),
     path('post/private/<slug:slug>/', private_post_view, name='private_post'),
     path('tag/<str:tag_name>/', tag_posts_view, name='tag_posts'),
-]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('search/', search_view, name='search'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
