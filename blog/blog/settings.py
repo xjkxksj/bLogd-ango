@@ -20,7 +20,6 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     "body.apps.BodyConfig",
-    "captcha",
     "django.core.files",
     "django.contrib.admin",
     "django.contrib.auth",
